@@ -1,2 +1,2 @@
-# FinDev-front-end
+# FinDev-frontend
 Desenvolvimento de Software III
