@@ -1,30 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import './App.css'
+import { HomeScreen } from './ui/screens/home/home'
+import { LoginScreen } from './ui/screens/login/login'
+import { Screens } from './constants/index'
+
+import { BrowserRouter, Route, Redirect } from "react-router-dom"
 
 interface AppProps { }
 
 export class App extends React.Component<AppProps, {}> {
-  render() {
+  render(): JSX.Element {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-        </a>
-        </header>
+        <BrowserRouter>
+          <Route exact path={Screens.LOGIN} component={LoginScreen} />
+          <Route exact path={Screens.HOME} component={HomeScreen} />
+          <Redirect to={Screens.LOGIN} />
+        </BrowserRouter>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
