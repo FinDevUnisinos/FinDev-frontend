@@ -11,6 +11,10 @@ module.exports = {
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    alias: {
+      constants: resolve(__dirname, './src/constants'),
+      screens: resolve(__dirname, './src/ui/screens')
+    },
   },
 
   module: {

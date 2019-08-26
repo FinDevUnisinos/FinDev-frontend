@@ -1,8 +1,7 @@
 import React from 'react'
 import './App.css'
-import { HomeScreen } from './ui/screens/home/home'
-import { LoginScreen } from './ui/screens/login/login'
-import { Screens } from './constants/index'
+import { HomeScreen, LoginScreen } from 'screens/index'
+import { Screens } from 'constants/index'
 
 import { BrowserRouter, Route, Redirect } from "react-router-dom"
 

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
-import { Screens } from '../../../constants/index'
+import { Screens } from 'constants/index'
 
 interface LoginProps { }
 
