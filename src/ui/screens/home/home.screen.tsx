@@ -1,14 +1,31 @@
 import React, { PureComponent } from 'react'
+import maps from './home.map'
+import { connect } from 'react-redux'
 
-interface HomeProps { }
+interface HomeProps {
+  number: number,
+  increment: () => any,
+  decrement: () => any,
+}
 
-export class HomeScreen extends PureComponent<HomeProps, {}> {
+interface StateType { }
+
+export class HomeScreen extends PureComponent<HomeProps, StateType> {
   render(): JSX.Element {
     return (
       <div>
-        teste
+        <div>
+          number: {this.props.number}
+        </div>
+        <button onClick={this.props.increment}>increment</button>
+        <button onClick={this.props.decrement}>decrement</button>
       </div>
     )
   }
 }
+
+export const Home = connect(
+  maps.mapStateToProps,
+  maps.mapDispatchToProps,
+)(HomeScreen)
 

@@ -9,11 +9,11 @@ module.exports = {
   devtool: "source-map",
 
   resolve: {
-    // Add '.ts' and '.tsx' as resolvable extensions.
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
     alias: {
       constants: resolve(__dirname, './src/constants'),
-      screens: resolve(__dirname, './src/ui/screens')
+      screens: resolve(__dirname, './src/ui/screens'),
+      app_redux: resolve(__dirname, './src/redux'),
     },
   },
 
