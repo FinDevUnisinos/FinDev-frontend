@@ -8,9 +8,4 @@ interface DecrementAction {
   type: typeof COUNTER_ACTIONS.DECREMENT,
 }
 
-interface CounterReducer {
-  number: number,
-}
-export type ICounterReducerType = CounterReducer
-
 export type ICounterActionTypes = IncrementAction | DecrementAction

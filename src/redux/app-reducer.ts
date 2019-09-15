@@ -1,5 +1,5 @@
 import { combineReducers, createStore } from 'redux'
-import { CounterReducer, ICounterReducerType } from './counter/index'
+import { CounterReducer, ICounterReducerType } from './counter/counter.reducer'
 
 export interface IAppState {
   counterReducer: ICounterReducerType

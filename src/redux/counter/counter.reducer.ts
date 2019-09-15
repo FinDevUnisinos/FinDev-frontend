@@ -1,5 +1,9 @@
-import { ICounterReducerType, ICounterActionTypes } from './counter.types'
+import { ICounterActionTypes } from './counter.types'
 import { COUNTER_ACTIONS } from './counter.constant'
+
+export interface ICounterReducerType {
+  number: number,
+}
 
 const initialState: ICounterReducerType = {
   number: 0
