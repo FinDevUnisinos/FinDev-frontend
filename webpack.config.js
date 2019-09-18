@@ -1,8 +1,17 @@
 const { resolve } = require('path');
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: "production",
+  target: 'web',
+  plugins: [
+    new webpack.DefinePlugin({
+      "process.env": {
+        NODE_ENV: JSON.stringify("production")
+      }
+    }),
+  ],
   // context: resolve(__dirname, './src'),
   // entry: './src/index.html',
   // Enable sourcemaps for debugging webpack's output.
