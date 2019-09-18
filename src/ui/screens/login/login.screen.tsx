@@ -9,15 +9,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { Screens } from 'constants/index';
-
-import './login.css';
 
 interface LoginProps { }
-
-function handleClick() {
-  <Link href={Screens.HOME}></Link>
-};
 
 export class LoginScreen extends PureComponent<LoginProps, {}> {
   render(): JSX.Element {
@@ -55,7 +48,7 @@ export class LoginScreen extends PureComponent<LoginProps, {}> {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
-            <Button onClick={handleClick}
+            <Button
               type="submit"
               fullWidth
               variant="contained"

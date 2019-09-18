@@ -6,6 +6,7 @@ import { Provider } from 'react-redux'
 import { store } from 'app_redux/index'
 
 import { BrowserRouter, Route, Redirect } from 'react-router-dom'
+import { signUpScreen } from 'screens/signup/signUp.screen'
 
 interface AppProps { }
 
@@ -17,6 +18,7 @@ export class App extends React.Component<AppProps, {}> {
           <BrowserRouter>
             <Route exact path={Screens.LOGIN} component={LoginScreen} />
             <Route exact path={Screens.HOME} component={Home} />
+            <Route exact path={Screens.SIGNUP} component={signUpScreen} />
             <Redirect to={Screens.LOGIN} />
           </BrowserRouter>
         </Provider>
