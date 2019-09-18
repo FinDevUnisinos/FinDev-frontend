@@ -23,6 +23,8 @@ module.exports = {
       constants: resolve(__dirname, './src/constants'),
       screens: resolve(__dirname, './src/ui/screens'),
       app_redux: resolve(__dirname, './src/redux'),
+      config: resolve(__dirname, './src/config'),
+      service: resolve(__dirname, './src/service'),
     },
   },
 

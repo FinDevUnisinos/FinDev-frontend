@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Screens } from 'constants/index';
+import LoginService from 'service/user.service'
 
 // import './login.css'
 
@@ -17,6 +18,7 @@ interface LoginProps { }
 interface LoginState {
   email: string,
   password: string,
+  error: boolean,
 }
 
 function handleClick() {
@@ -30,8 +32,9 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
     this.state = {
       email: '',
       password: '',
+      error: false,
     }
-
+    this.onSubmit = this.onSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
 
@@ -44,13 +47,23 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
     } as Pick<LoginState, any>)
   }
 
-  onSubmit(){
+  onSubmit() {
+    this.setState({
+      error: false,
+    })
 
+    LoginService.login(this.state.email, this.state.password)
+      .then((response) => {
+        localStorage.token = response.data
+      })
+      .catch((error) => {
+        this.setState({
+          error: true
+        })
+      })
   }
 
   render(): JSX.Element {
-    const test = process.env
-
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -71,6 +84,7 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
               autoFocus
               onChange={this.handleChange}
               className='test'
+              error={this.state.error}
             />
             <TextField
               variant="outlined"
@@ -92,6 +106,7 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
               type="submit"
               fullWidth
               variant="contained"
+              onClick={this.onSubmit}
             >
               Sign In
             </Button>
