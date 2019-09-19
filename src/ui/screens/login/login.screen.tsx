@@ -110,10 +110,6 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
           error={this.state.error}
         />
         {this.state.error && <div className="password-error">Senha inválida</div>}
-        <FormControlLabel
-          control={<Checkbox value="remember" color="primary" />}
-          label="Remember me"
-        />
         <Button
           type="submit"
           fullWidth
@@ -121,12 +117,12 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
           onClick={this.onSubmit}
         >
           Sign In
-            </Button>
+        </Button>
         <Grid container>
           <Grid item xs>
             <Link href="#" variant="body2">
               Forgot password?
-                </Link>
+            </Link>
           </Grid>
           <Grid item>
             <Link href="#" variant="body2">
