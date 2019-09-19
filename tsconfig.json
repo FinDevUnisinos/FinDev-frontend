@@ -25,6 +25,8 @@
       "constants/*": ["src/constants/*"],
       "screens/*": ["src/ui/screens/*"],
       "app_redux/*": ["src/redux/*"],
+      "config/*":  ["src/config/*"],
+      "service/*":  ["src/service/*"],
     }
   },
   "include": [
