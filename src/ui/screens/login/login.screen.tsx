@@ -8,10 +8,12 @@ import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import { Screens } from 'constants/index';
 import LoginService from 'service/user.service'
+import { AxiosError, AxiosResponse } from 'axios'
+import { Redirect } from 'react-router-dom'
+import { ScreensConstants } from 'constants/index'
 
-// import './login.css'
+import './login.css'
 
 interface LoginProps { }
 
@@ -19,11 +21,8 @@ interface LoginState {
   email: string,
   password: string,
   error: boolean,
+  shouldRedirect: boolean,
 }
-
-function handleClick() {
-  <Link href={Screens.HOME}></Link>
-};
 
 export class LoginScreen extends PureComponent<LoginProps, LoginState> {
   constructor(props: LoginProps) {
@@ -33,7 +32,9 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
       email: '',
       password: '',
       error: false,
+      shouldRedirect: false,
     }
+
     this.onSubmit = this.onSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
@@ -53,78 +54,87 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
     })
 
     LoginService.login(this.state.email, this.state.password)
-      .then((response) => {
+      .then((response: AxiosResponse) => {
         localStorage.token = response.data
-      })
-      .catch((error) => {
         this.setState({
-          error: true
+          shouldRedirect: true,
         })
       })
+      .catch((error: AxiosError) => {
+        this.setState({
+          error: true,
+        })
+      })
+  }
+
+  redirectToHome(): JSX.Element {
+    if(this.state.shouldRedirect){
+      return <Redirect to={ScreensConstants.HOME}/>
+    }
+
+    return <div />
   }
 
   render(): JSX.Element {
     return (
       <Container component="main" maxWidth="xs">
+        {this.redirectToHome()}
         <CssBaseline />
-        <div>
-          <Typography component="h1" variant="h5" >
-            Sign in
+        <Typography component="h1" variant="h5" >
+          Sign in
           </Typography>
-          <form>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              onChange={this.handleChange}
-              className='test'
-              error={this.state.error}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={this.handleChange}
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              onClick={this.onSubmit}
-            >
-              Sign In
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="email"
+          label="Email Address"
+          name="email"
+          autoComplete="email"
+          autoFocus
+          onChange={this.handleChange}
+          className='test'
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          name="password"
+          label="Password"
+          type="password"
+          id="password"
+          autoComplete="current-password"
+          onChange={this.handleChange}
+          error={this.state.error}
+        />
+        {this.state.error && <div className="password-error">Senha inválida</div>}
+        <FormControlLabel
+          control={<Checkbox value="remember" color="primary" />}
+          label="Remember me"
+        />
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          onClick={this.onSubmit}
+        >
+          Sign In
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
+        <Grid container>
+          <Grid item xs>
+            <Link href="#" variant="body2">
+              Forgot password?
                 </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-          </form>
-        </div>
+          </Grid>
+          <Grid item>
+            <Link href="#" variant="body2">
+              {"Don't have an account? Sign Up"}
+            </Link>
+          </Grid>
+        </Grid>
       </Container>
-    );
+    )
   }
 }

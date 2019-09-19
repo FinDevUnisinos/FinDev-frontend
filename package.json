@@ -23,7 +23,7 @@
     "typescript": "3.5.3"
   },
   "scripts": {
-    "start": "webpack-dev-server ",
+    "start": "webpack-dev-server",
     "build": "npx webpack",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

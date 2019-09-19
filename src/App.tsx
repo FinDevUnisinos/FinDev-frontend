@@ -1,7 +1,7 @@
 import React from 'react'
 import './App.css'
 import { Home, LoginScreen } from 'screens/index'
-import { Screens } from 'constants/index'
+import { ScreensConstants } from 'constants/index'
 import { Provider } from 'react-redux'
 import { store } from 'app_redux/index'
 
@@ -15,9 +15,9 @@ export class App extends React.Component<AppProps, {}> {
       <div className="App">
         <Provider store={store}>
           <BrowserRouter>
-            <Route exact path={Screens.LOGIN} component={LoginScreen} />
-            <Route exact path={Screens.HOME} component={Home} />
-            <Redirect to={Screens.LOGIN} />
+            <Route exact path={ScreensConstants.LOGIN} component={LoginScreen} />
+            <Route exact path={ScreensConstants.HOME} component={Home} />
+            <Redirect to={ScreensConstants.LOGIN} />
           </BrowserRouter>
         </Provider>
       </div>
