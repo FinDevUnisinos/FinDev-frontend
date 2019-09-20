@@ -5,16 +5,47 @@ import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import ToggleButton from '@material-ui/lab/ToggleButton';
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
-import { Screens } from '../../../constants/index';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import Radio from '@material-ui/core/Radio';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 interface SignUpProps { }
 
-export class signUpScreen extends PureComponent<SignUpProps, {}>{
-    render(): JSX.Element {
+interface SignUpState {
+  email: string,
+  password: string,
+  userType: string,
+  error: boolean,
+  shouldRedirect: boolean,
+}
+
+export class signUpScreen extends PureComponent<SignUpProps, SignUpState>{
+  constructor(props: SignUpProps){
+    super(props)
+
+    this.state = {
+      email: '',
+      password: '',
+      userType: '',
+      error: false,
+      shouldRedirect: false,
+    }
+
+    this.onSubmit = this.onSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const target = event.currentTarget
+    const value = target.value
+    const name: string = target.name
+    this.setState({
+      [name]: value
+    } as Pick<SignUpState, any>)
+  }
+
+  render(): JSX.Element {
         return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -23,19 +54,20 @@ export class signUpScreen extends PureComponent<SignUpProps, {}>{
                 Sign up
             </Typography>
 
-            <Grid item >
-              <ToggleButtonGroup
-                exclusive
-                aria-label="text alignment"
-              >
-                <ToggleButton aria-label="left aligned">
-                  Freelancer
-                </ToggleButton>
-                <ToggleButton  aria-label="centered">
-                  Employer
-                </ToggleButton>
-              </ToggleButtonGroup>
-            </Grid>
+            <RadioGroup aria-label="position" name="position" row>
+            <FormControlLabel
+              value="Employee"
+              control={<Radio color="primary" />}
+              label="Employee"
+              labelPlacement="end"
+            />
+            <FormControlLabel
+              value="Company"
+              control={<Radio color="primary" />}
+              label="Company"
+              labelPlacement="end"
+            />
+            </RadioGroup>
 
             <form>
               <TextField
