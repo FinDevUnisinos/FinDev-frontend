@@ -32,7 +32,6 @@ export class signUpScreen extends PureComponent<SignUpProps, SignUpState>{
       shouldRedirect: false,
     }
 
-    this.onSubmit = this.onSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
 

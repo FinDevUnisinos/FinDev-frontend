@@ -1,1 +1,1 @@
-export { Screens } from "./screen";
+export { ScreensConstants } from "./screen.constants";
