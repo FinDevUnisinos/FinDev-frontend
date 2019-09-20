@@ -2,8 +2,6 @@ import React, { PureComponent } from 'react'
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -12,6 +10,7 @@ import LoginService from 'service/user.service'
 import { AxiosError, AxiosResponse } from 'axios'
 import { Redirect } from 'react-router-dom'
 import { ScreensConstants } from 'constants/index'
+import { Link as RouterLink } from 'react-router-dom';
 
 import './login.css'
 
@@ -38,6 +37,15 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
     this.onSubmit = this.onSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
+
+  redirectToLogin(): JSX.Element {
+    if (this.state.shouldRedirect) {
+      return <Redirect to={ScreensConstants.LOGIN} />
+    }
+
+    return <div />
+  }
+
 
   handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const target = event.currentTarget
@@ -75,6 +83,15 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
     return <div />
   }
 
+  redirectToSignUp(): JSX.Element {
+    if(this.state.shouldRedirect){
+      return <Redirect to={ScreensConstants.SIGNUP}/>
+    }
+
+    return <div />
+  }
+
+
   render(): JSX.Element {
     return (
       <Container component="main" maxWidth="xs">
@@ -109,7 +126,7 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
           onChange={this.handleChange}
           error={this.state.error}
         />
-        {this.state.error && <div className="password-error">Senha inválida</div>}
+        {this.state.error && <div className="password-error">Wrong password</div>}
         <Button
           type="submit"
           fullWidth
@@ -125,7 +142,10 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
             </Link>
           </Grid>
           <Grid item>
-            <Link href="#" variant="body2">
+            <Link
+              component={RouterLink} to={ScreensConstants.SIGNUP}
+              href="#"
+              variant="body2" >
               {"Don't have an account? Sign Up"}
             </Link>
           </Grid>
