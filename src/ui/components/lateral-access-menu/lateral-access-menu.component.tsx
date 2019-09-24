@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import maps from './lateral-access-menu.map'
 
 import './lateral-access-menu.css'
 
@@ -11,11 +13,13 @@ export interface MenuItemType {
 
 interface LateralAccessMenuProps {
   menuItens?: MenuItemType[],
+  isRetracted: boolean,
+  toogle: () => any,
 }
 
 interface StateType { }
 
-export class LateralAccessMenu extends PureComponent<LateralAccessMenuProps, StateType> {
+export class LateralAccessMenuComponent extends PureComponent<LateralAccessMenuProps, StateType> {
 
   renderItem(text: string, path: string, isMain: boolean): JSX.Element {
     const style: string = isMain ?
@@ -39,15 +43,37 @@ export class LateralAccessMenu extends PureComponent<LateralAccessMenuProps, Sta
     })
   }
 
+
+
+  renderContent(): JSX.Element {
+    return !this.props.isRetracted ? (
+      <div className="lateral-access-menu-content">
+        <i className="fas fa-times lateral-access-menu-close-icon"
+          onClick={this.props.toogle}
+        />
+        <h1>Logo</h1>
+        {this.renderMenuItens()}
+      </div>
+    ) : <div />
+  }
+
+  getContainerStyle(): string {
+    return this.props.isRetracted ? "lateral-access-menu-container-retracted" : "lateral-access-menu-container"
+  }
+
   render(): JSX.Element {
     return (
-      <div className="lateral-access-menu-container">
-        <div className="lateral-access-menu-lateral-bar" />
-        <div className="lateral-access-menu-content">
-          <h1>Logo</h1>
-          {this.renderMenuItens()}
+      <div className={this.getContainerStyle()}>
+        <div className="lateral-access-menu-lateral-bar">
+          {this.props.isRetracted && <i className="fas fa-arrow-right" onClick={this.props.toogle} />}
         </div>
+        {this.renderContent()}
       </div>
     )
   }
 }
+
+export const LateralAccessMenu = connect(
+  maps.mapStateToProps,
+  maps.mapDispatchToProps,
+)(LateralAccessMenuComponent)
