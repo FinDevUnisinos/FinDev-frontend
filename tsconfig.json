@@ -27,6 +27,7 @@
       "app_redux/*": ["src/redux/*"],
       "config/*":  ["src/config/*"],
       "service/*":  ["src/service/*"],
+      "components/*":  ["src/ui/components/*"],
     }
   },
   "include": [

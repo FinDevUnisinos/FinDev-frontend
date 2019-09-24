@@ -17,9 +17,9 @@ module.exports = {
       app_redux: resolve(__dirname, './src/redux'),
       config: resolve(__dirname, './src/config'),
       service: resolve(__dirname, './src/service'),
+      components: resolve(__dirname, './src/ui/components'),
     },
   },
-
 
   module: {
     rules: [
