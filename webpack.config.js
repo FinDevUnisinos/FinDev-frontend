@@ -18,6 +18,7 @@ module.exports = {
       config: resolve(__dirname, './src/config'),
       service: resolve(__dirname, './src/service'),
       components: resolve(__dirname, './src/ui/components'),
+      assets: resolve(__dirname, './src/assets'),
     },
   },
 
@@ -41,7 +42,13 @@ module.exports = {
         enforce: "pre",
         test: /\.js$/,
         loader: "source-map-loader"
-      }
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: [
+          'file-loader',
+        ],
+      },
     ]
   },
   plugins: [

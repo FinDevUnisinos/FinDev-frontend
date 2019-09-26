@@ -28,6 +28,7 @@
       "config/*":  ["src/config/*"],
       "service/*":  ["src/service/*"],
       "components/*":  ["src/ui/components/*"],
+      "assets/*":  ["src/assets/*"],
     }
   },
   "include": [

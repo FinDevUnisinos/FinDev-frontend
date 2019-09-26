@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { LogoImage } from 'assets/index'
 import maps from './lateral-access-menu.map'
 
 import './lateral-access-menu.css'
@@ -21,13 +22,15 @@ interface StateType { }
 
 export class LateralAccessMenuComponent extends PureComponent<LateralAccessMenuProps, StateType> {
 
-  renderItem(text: string, path: string, isMain: boolean): JSX.Element {
-    const style: string = isMain ?
+  renderItem(text: string, path: string, isMain: boolean, index: number): JSX.Element {
+    let style: string = isMain ?
       "lateral-access-menu-item lateral-access-menu-item-main" :
       "lateral-access-menu-item"
 
+    const firstStyle = index==0 ? " lateral-access-menu-first-item" : ""
+
     return (
-      <div className={style}>
+      <div className={style + firstStyle} key={index}>
         <Link to={path}>
           {text}
         </Link>
@@ -38,8 +41,8 @@ export class LateralAccessMenuComponent extends PureComponent<LateralAccessMenuP
   renderMenuItens(): JSX.Element[] {
     const { menuItens = [] } = this.props
 
-    return menuItens.map((item: MenuItemType) => {
-      return this.renderItem(item.text, item.path, item.isMain)
+    return menuItens.map((item: MenuItemType, key) => {
+      return this.renderItem(item.text, item.path, item.isMain, key)
     })
   }
 
@@ -51,7 +54,7 @@ export class LateralAccessMenuComponent extends PureComponent<LateralAccessMenuP
         <i className="fas fa-times lateral-access-menu-close-icon"
           onClick={this.props.toogle}
         />
-        <h1>Logo</h1>
+        <img src={LogoImage} className="lateral-access-menu-logo" />
         {this.renderMenuItens()}
       </div>
     ) : <div />

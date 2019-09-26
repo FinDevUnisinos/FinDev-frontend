@@ -46,6 +46,10 @@
   padding-top: 40px;
 }
 
+.lateral-access-menu-first-item{
+  padding-top: 20px;
+}
+
 .lateral-access-menu-item-main{
   text-decoration: underline;
 }
@@ -63,4 +67,8 @@
   color: #000000;
   text-align: right;
   justify-self: flex-end;
+}
+
+.lateral-access-menu-logo{
+  height: 50px;
 }
