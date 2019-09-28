@@ -46,8 +46,6 @@ export class LateralAccessMenuComponent extends PureComponent<LateralAccessMenuP
     })
   }
 
-
-
   renderContent(): JSX.Element {
     return !this.props.isRetracted ? (
       <div className="lateral-access-menu-content">
