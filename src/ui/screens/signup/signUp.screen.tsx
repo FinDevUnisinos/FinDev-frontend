@@ -55,7 +55,7 @@ export class signUpScreen extends PureComponent<SignUpProps, SignUpState>{
       error: false,
     })
 
-    LoginService.signUp(this.state.name, this.state.email, this.state.password)
+    LoginService.signUp(this.state.name, this.state.email, this.state.password, this.state.userType)
       .then((response: AxiosResponse) => {
         localStorage.token = response.data
         this.setState({
@@ -86,22 +86,22 @@ export class signUpScreen extends PureComponent<SignUpProps, SignUpState>{
           Sign up
         </Typography>
 
-        <RadioGroup aria-label="position" name="position" row>
-          <FormControlLabel
-            value="Employee"
-            control={<Radio color="primary" />}
-            label="Employee"
-            labelPlacement="end"
-          />
-          <FormControlLabel
-            value="Company"
-            control={<Radio color="primary" />}
-            label="Company"
-            labelPlacement="end"
-          />
-        </RadioGroup>
-
         <form>
+          <RadioGroup onChange={this.handleChange} aria-label="userType" id="userType" name="userType" row>
+            <FormControlLabel
+              value="EMPLOYEE"
+              control={<Radio color="primary" />}
+              label="Employee"
+              labelPlacement="end"
+            />
+            <FormControlLabel
+              value="COMPANY"
+              control={<Radio color="primary" />}
+              label="Company"
+              labelPlacement="end"
+            />
+          </RadioGroup>
+
           <TextField
             variant="outlined"
             margin="normal"
