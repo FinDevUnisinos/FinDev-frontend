@@ -16,6 +16,7 @@ import { ScreensConstants } from 'constants/index'
 import { Link as RouterLink } from 'react-router-dom';
 
 interface SignUpProps { }
+
 interface SignUpState {
   name: string,
   email: string,
@@ -24,7 +25,8 @@ interface SignUpState {
   error: boolean,
   shouldRedirect: boolean,
 }
-export class signUpScreen extends PureComponent<SignUpProps, SignUpState>{
+
+export class SignUpScreen extends PureComponent<SignUpProps, SignUpState>{
   constructor(props: SignUpProps) {
     super(props)
 
@@ -85,95 +87,91 @@ export class signUpScreen extends PureComponent<SignUpProps, SignUpState>{
         <Typography component="h1" variant="h5" >
           Sign up
         </Typography>
-
-        <form>
-          <RadioGroup onChange={this.handleChange} aria-label="userType" id="userType" name="userType" row>
-            <FormControlLabel
-              value="EMPLOYEE"
-              control={<Radio color="primary" />}
-              label="Employee"
-              labelPlacement="end"
-            />
-            <FormControlLabel
-              value="COMPANY"
-              control={<Radio color="primary" />}
-              label="Company"
-              labelPlacement="end"
-            />
-          </RadioGroup>
-
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="name"
-            label="Name"
-            name="name"
-            autoComplete="name"
-            autoFocus
-            onChange={this.handleChange}
+        <RadioGroup onChange={this.handleChange} aria-label="userType" id="userType" name="userType" row>
+          <FormControlLabel
+            value="EMPLOYEE"
+            control={<Radio color="primary" />}
+            label="Employee"
+            labelPlacement="end"
           />
-
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            onChange={this.handleChange}
+          <FormControlLabel
+            value="COMPANY"
+            control={<Radio color="primary" />}
+            label="Company"
+            labelPlacement="end"
           />
+        </RadioGroup>
 
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={this.handleChange}
-          />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="name"
+          label="Name"
+          name="name"
+          autoComplete="name"
+          autoFocus
+          onChange={this.handleChange}
+        />
 
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="confirmPassword"
-            label="Confirm password"
-            type="password"
-            id="confirmPassword"
-            autoComplete="current-password"
-          />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="email"
+          label="Email Address"
+          name="email"
+          autoComplete="email"
+          autoFocus
+          onChange={this.handleChange}
+        />
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            onClick={this.onSubmit}
-          >
-            Sign Up
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          name="password"
+          label="Password"
+          type="password"
+          id="password"
+          autoComplete="current-password"
+          onChange={this.handleChange}
+        />
+
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          name="confirmPassword"
+          label="Confirm password"
+          type="password"
+          id="confirmPassword"
+          autoComplete="current-password"
+        />
+
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          onClick={this.onSubmit}
+        >
+          Sign Up
           </Button>
-          <Grid container>
-            <Grid item>
-              <Link
-                component={RouterLink} to={ScreensConstants.LOGIN}
-                href="#"
-                variant="body2" >
-                {"Already have an account? Sign In"}
-              </Link>
-            </Grid>
+        <Grid container>
+          <Grid item>
+            <Link
+              component={RouterLink} to={ScreensConstants.LOGIN}
+              href="#"
+              variant="body2" >
+              {"Already have an account? Sign In"}
+            </Link>
           </Grid>
-        </form>
+        </Grid>
       </Container>
     );
-
   }
 }
