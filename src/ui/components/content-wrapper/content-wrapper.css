@@ -1,11 +1,11 @@
 .content-wrapper{
   background-color: #EFEFEF;
   min-height: 100vh;
-  padding-left: 275px;
+  padding-left: 250px;
 }
 
 .content-wrapper-retracted{
   background-color: #EFEFEF;
   min-height: 100vh;
-  padding-left: 75px;
+  padding-left: 50px;
 }

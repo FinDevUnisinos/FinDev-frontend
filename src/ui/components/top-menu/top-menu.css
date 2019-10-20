@@ -1,0 +1,20 @@
+.top-menu-container {
+  flex-grow: 1;
+  padding-top: 20px;
+  border-bottom: 1px solid #1D1D1D;
+  padding-bottom: 15px;
+}
+
+.top-menu-icon {
+  font-size: 30px;
+  color: #2C73CA;
+}
+
+.top-menu-user-name{
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.top-menu-user-title{
+  font-size: 11px;
+}
