@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import maps from './home.map'
 import { connect } from 'react-redux'
-import { LateralAccessMenu, IMenuItemType } from 'components/index'
+import { LateralAccessMenu, IMenuItemType, ContentWrapper } from 'components/index'
 
 import './home.css'
 
@@ -15,7 +15,7 @@ interface StateType { }
 
 export class HomeScreen extends PureComponent<HomeProps, StateType> {
 
-  getFreelancerMenu(): IMenuItemType[]{
+  getFreelancerMenu(): IMenuItemType[] {
     return [
       {
         text: 'Projects',
@@ -42,14 +42,16 @@ export class HomeScreen extends PureComponent<HomeProps, StateType> {
 
   render(): JSX.Element {
     return (
-      <div className="home-container">
+      <ContentWrapper>
         <LateralAccessMenu menuItens={this.getFreelancerMenu()} />
-        <div>
-          number: {this.props.number}
+        <div className="home-content">
+          <div>
+            number: {this.props.number}
+          </div>
+          <button onClick={this.props.increment}>increment</button>
+          <button onClick={this.props.decrement}>decrement</button>
         </div>
-        <button onClick={this.props.increment}>increment</button>
-        <button onClick={this.props.decrement}>decrement</button>
-      </div>
+      </ContentWrapper>
     )
   }
 }
