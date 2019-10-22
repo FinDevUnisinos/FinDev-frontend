@@ -6,3 +6,5 @@ export type IMenuItemType = MenuItemType
 export { ContentWrapper } from './content-wrapper/content-wrapper.component'
 
 export { TopMenu } from './top-menu/top-menu.component'
+
+export { ProjectItem } from './project-item/project-item-component'

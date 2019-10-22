@@ -1,0 +1,26 @@
+.project-item-container {
+    height: auto;
+    width: 50%;
+    padding: 10px;
+    border: 1px solid #1D1D1D;
+}
+
+.grid-list-project-items {
+    min-height: 200px;
+    height: auto;
+    display: 'flex';
+    flex: 'wrap';
+    justify-content: 'space-around';
+    overflow: 'hidden';
+    background-color: rgb(222, 222, 222);
+}
+
+.project-item-text {
+    margin: 10px;
+}
+
+.project-item-icon {
+    font-size: 30px;
+    margin: 10px;
+    color: rgb(0, 139, 46);
+}
