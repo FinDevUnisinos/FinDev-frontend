@@ -3,19 +3,19 @@ import { Grid } from '@material-ui/core'
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import ListSubheader from '@material-ui/core/ListSubheader';
-import "./project-item.css"
+import "./project-items-freelancer.css"
 import ProjectService from '../../../service/project.service'
 import { AxiosError, AxiosResponse } from 'axios'
 
-interface IProjectItemPropType { }
+interface IProjectItemsFreelancerPropType { }
 
-interface IProjectItemStateType {
+interface IProjectItemsFreelancerStateType {
   data: any,
   error: boolean,
 }
 
-export class ProjectItem extends PureComponent<IProjectItemPropType, IProjectItemStateType>{
-  constructor(props: IProjectItemPropType) {
+export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelancerPropType, IProjectItemsFreelancerStateType>{
+  constructor(props: IProjectItemsFreelancerPropType) {
     super(props)
 
     this.state = {
@@ -47,9 +47,9 @@ export class ProjectItem extends PureComponent<IProjectItemPropType, IProjectIte
     return (
       <Grid
         item
-        className="project-item-text"
+        className="project-items-freelancer-text"
       >
-        {skillItem.skill && skillItem.skill.description} ({skillItem.level == null ?"No skills!":skillItem.level})
+        {skillItem.skill && skillItem.skill.description} ({skillItem.level == null ? "No skills!" : skillItem.level})
       </Grid>
     )
   }
@@ -57,7 +57,7 @@ export class ProjectItem extends PureComponent<IProjectItemPropType, IProjectIte
   renderItemProject(projectItem: any): JSX.Element {
     return (
       <Grid
-        className="project-item-container"
+        className="project-items-freelancer-container"
         item
         xs={6}
         sm={6}
@@ -70,7 +70,7 @@ export class ProjectItem extends PureComponent<IProjectItemPropType, IProjectIte
 
           <Grid
             item
-            className="project-item-text"
+            className="project-items-freelancer-text"
           >
             {projectItem.name}
           </Grid>
@@ -78,7 +78,7 @@ export class ProjectItem extends PureComponent<IProjectItemPropType, IProjectIte
 
           <Grid
             item
-            className="project-item-text"
+            className="project-items-freelancer-text"
           >
             {projectItem.description}
           </Grid>
@@ -105,11 +105,11 @@ export class ProjectItem extends PureComponent<IProjectItemPropType, IProjectIte
           >
 
             <Grid item>
-              <i className="far fa-heart project-item-icon" />
+              <i className="far fa-heart project-items-freelancer-icon" />
             </Grid>
 
             <Grid item>
-              <i className="far fa-times-circle project-item-icon" />
+              <i className="far fa-times-circle project-items-freelancer-icon" />
             </Grid>
 
           </Grid>
@@ -120,11 +120,9 @@ export class ProjectItem extends PureComponent<IProjectItemPropType, IProjectIte
     )
   }
 
-
-
   render(): JSX.Element {
     return (
-      <GridList className="grid-list-project-items">
+      <GridList className="project-items-freelancer-grid-list">
         <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
           <ListSubheader component="div">Projects</ListSubheader>
         </GridListTile>

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import maps from './home.map'
 import { connect } from 'react-redux'
-import { LateralAccessMenu, IMenuItemType, ContentWrapper, TopMenu, ProjectItem} from 'components/index'
+import { LateralAccessMenu, IMenuItemType, ContentWrapper, TopMenu, ProjectItemsFreelancer} from 'components/index'
 
 import './home.css'
 
@@ -46,7 +46,7 @@ export class HomeScreen extends PureComponent<HomeProps, StateType> {
         <LateralAccessMenu menuItens={this.getFreelancerMenu()} />
         <div className="home-content">
           <TopMenu />
-          <ProjectItem />
+          <ProjectItemsFreelancer />
           <div>
             number: {this.props.number}
           </div>

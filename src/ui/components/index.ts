@@ -7,4 +7,4 @@ export { ContentWrapper } from './content-wrapper/content-wrapper.component'
 
 export { TopMenu } from './top-menu/top-menu.component'
 
-export { ProjectItem } from './project-item/project-item-component'
+export { ProjectItemsFreelancer } from './project-items-freelancer/project-items-freelancer.component'
