@@ -2,7 +2,7 @@
     height: auto;
     width: 50%;
     padding: 10px;
-    border: 1px solid #1D1D1D;
+    border: 1px solid #CFCFCF;
 }
 
 .project-items-freelancer-grid-list {
@@ -17,6 +17,30 @@
 
 .project-items-freelancer-text {
     margin: 10px;
+    text-align: justify;
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
+.project-item-title{
+    margin: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.project-item-skills-title{
+    margin: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    border-bottom:1px solid #E8E8E8;
+}
+
+.project-skills{
+    margin: 10px;
+    font-size: 14px;
+    text-align: center;
 }
 
 .project-items-freelancer-icon {

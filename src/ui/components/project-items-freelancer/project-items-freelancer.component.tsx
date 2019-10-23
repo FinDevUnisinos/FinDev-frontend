@@ -70,7 +70,7 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
 
           <Grid
             item
-            className="project-items-freelancer-text"
+            className="project-item-title"
           >
             {projectItem.name}
           </Grid>
@@ -87,12 +87,14 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
           <Grid
             item
           >
-            <strong>Skills</strong>
+            <div className="project-item-skills-title">Skills</div>
+            <div className="project-skills">
             {
               projectItem.skillsProject.map(
                 this.renderSkill
               )
             }
+            </div>
           </Grid>
 
 
