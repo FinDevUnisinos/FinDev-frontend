@@ -47,7 +47,7 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
     return (
       <Grid
         item
-        className="project-items-freelancer-text"
+        className="project-items-freelancer-skill-text"
       >
         {skillItem.skill && skillItem.skill.description} ({skillItem.level == null ? "No skills!" : skillItem.level})
       </Grid>
@@ -66,56 +66,57 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
         justify="flex-start"
         direction="column"
       >
-        <div style={{ padding: 10 }}>
-
-          <Grid
-            item
-            className="project-item-title"
-          >
-            {projectItem.name}
-          </Grid>
-
-
-          <Grid
-            item
-            className="project-items-freelancer-text"
-          >
-            {projectItem.description}
-          </Grid>
-
-
-          <Grid
-            item
-          >
-            <div className="project-item-skills-title">Skills</div>
-            <div className="project-skills">
-            {
-              projectItem.skillsProject.map(
-                this.renderSkill
-              )
-            }
-            </div>
-          </Grid>
-
-
-          <Grid
-            container
-            spacing={2}
-            justify="center"
-            alignItems="center"
-            direction="row"
-          >
-
-            <Grid item>
-              <i className="far fa-heart project-items-freelancer-icon" />
+        <div className="project-items-freelancer-subcontainer">
+          <div className="project-items-freelancer-subsubcontainer">
+            <Grid
+              item
+              className="project-item-title"
+            >
+              {projectItem.name}
             </Grid>
 
-            <Grid item>
-              <i className="far fa-times-circle project-items-freelancer-icon" />
+
+            <Grid
+              item
+              className="project-items-freelancer-text"
+            >
+              {projectItem.description}
             </Grid>
 
-          </Grid>
 
+            <Grid
+              item
+            >
+              <div className="project-item-skills-title">Skills</div>
+              <div className="project-skills">
+                {
+                  projectItem.skillsProject.map(
+                    this.renderSkill
+                  )
+                }
+              </div>
+            </Grid>
+
+
+            <Grid
+              container
+              spacing={2}
+              justify="center"
+              alignItems="center"
+              direction="row"
+            >
+
+              <Grid item>
+                <i className="far fa-heart project-items-freelancer-icon" />
+              </Grid>
+
+              <Grid item>
+                <i className="far fa-times-circle project-items-freelancer-icon" />
+              </Grid>
+
+            </Grid>
+
+          </div>
         </div>
 
       </Grid>

@@ -47,11 +47,11 @@ export class HomeScreen extends PureComponent<HomeProps, StateType> {
         <div className="home-content">
           <TopMenu />
           <ProjectItemsFreelancer />
-          <div>
+          {/* <div>
             number: {this.props.number}
           </div>
           <button onClick={this.props.increment}>increment</button>
-          <button onClick={this.props.decrement}>decrement</button>
+          <button onClick={this.props.decrement}>decrement</button> */}
         </div>
       </ContentWrapper>
     )

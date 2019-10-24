@@ -2,11 +2,19 @@
     height: auto;
     width: 50%;
     padding: 10px;
+}
+
+.project-items-freelancer-subcontainer {
+    padding: 2%;
+}
+
+.project-items-freelancer-subsubcontainer {
+    padding: 2%;
     border: 1px solid #CFCFCF;
 }
 
 .project-items-freelancer-grid-list {
-    min-height: 200px;
+    min-height: 230px;
     height: auto;
     display: 'flex';
     flex: 'wrap';
@@ -17,27 +25,36 @@
 
 .project-items-freelancer-text {
     margin: 10px;
+    min-height: 55px;
     text-align: justify;
-    padding-left: 20%;
-    padding-right: 20%;
+    padding-left: 15%;
+    padding-right: 15%;
 }
 
-.project-item-title{
+.project-items-freelancer-skill-text {
+    margin: 10px;
+    text-align: justify;
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+.project-item-title {
     margin: 10px;
     font-size: 20px;
+    min-height: 20px;
     font-weight: bold;
     text-align: center;
 }
 
-.project-item-skills-title{
+.project-item-skills-title {
     margin: 10px;
     font-size: 20px;
     font-weight: bold;
     text-align: center;
-    border-bottom:1px solid #E8E8E8;
+    border-bottom: 1px solid #E8E8E8;
 }
 
-.project-skills{
+.project-skills {
     margin: 10px;
     font-size: 14px;
     text-align: center;
