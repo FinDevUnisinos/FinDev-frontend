@@ -15,4 +15,21 @@ export default class LoginService {
       },
     })
   }
+
+  static signUp(name: string, email: string, password: string, userType: string) {
+    return axios({
+      method: 'POST',
+      url: `${CONFIG.API_URL}/user/signup`,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: {
+        name,
+        email,
+        password,
+        userType
+      },
+    })
+  }
 }
+

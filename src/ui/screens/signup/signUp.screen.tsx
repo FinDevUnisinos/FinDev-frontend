@@ -6,30 +6,35 @@ import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import Radio from '@material-ui/core/Radio';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import LoginService from 'service/user.service'
 import { AxiosError, AxiosResponse } from 'axios'
 import { Redirect } from 'react-router-dom'
 import { ScreensConstants } from 'constants/index'
 import { Link as RouterLink } from 'react-router-dom';
 
-import './login.css'
+interface SignUpProps { }
 
-interface LoginProps { }
-
-interface LoginState {
+interface SignUpState {
+  name: string,
   email: string,
   password: string,
+  userType: string,
   error: boolean,
   shouldRedirect: boolean,
 }
 
-export class LoginScreen extends PureComponent<LoginProps, LoginState> {
-  constructor(props: LoginProps) {
+export class SignUpScreen extends PureComponent<SignUpProps, SignUpState>{
+  constructor(props: SignUpProps) {
     super(props)
 
     this.state = {
+      name: '',
       email: '',
       password: '',
+      userType: '',
       error: false,
       shouldRedirect: false,
     }
@@ -38,22 +43,13 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
     this.handleChange = this.handleChange.bind(this)
   }
 
-  redirectToLogin(): JSX.Element {
-    if (this.state.shouldRedirect) {
-      return <Redirect to={ScreensConstants.LOGIN} />
-    }
-
-    return <div />
-  }
-
-
   handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const target = event.currentTarget
     const value = target.value
     const name: string = target.name
     this.setState({
       [name]: value
-    } as Pick<LoginState, any>)
+    } as Pick<SignUpState, any>)
   }
 
   onSubmit() {
@@ -61,7 +57,7 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
       error: false,
     })
 
-    LoginService.login(this.state.email, this.state.password)
+    LoginService.signUp(this.state.name, this.state.email, this.state.password, this.state.userType)
       .then((response: AxiosResponse) => {
         localStorage.token = response.data
         this.setState({
@@ -76,21 +72,12 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
   }
 
   redirectToHome(): JSX.Element {
-    if(this.state.shouldRedirect){
-      return <Redirect to={ScreensConstants.HOME}/>
+    if (this.state.shouldRedirect) {
+      return <Redirect to={ScreensConstants.HOME} />
     }
 
     return <div />
   }
-
-  redirectToSignUp(): JSX.Element {
-    if(this.state.shouldRedirect){
-      return <Redirect to={ScreensConstants.SIGNUP}/>
-    }
-
-    return <div />
-  }
-
 
   render(): JSX.Element {
     return (
@@ -98,8 +85,36 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
         {this.redirectToHome()}
         <CssBaseline />
         <Typography component="h1" variant="h5" >
-          Sign in
-          </Typography>
+          Sign up
+        </Typography>
+        <RadioGroup onChange={this.handleChange} aria-label="userType" id="userType" name="userType" row>
+          <FormControlLabel
+            value="EMPLOYEE"
+            control={<Radio color="primary" />}
+            label="Employee"
+            labelPlacement="end"
+          />
+          <FormControlLabel
+            value="COMPANY"
+            control={<Radio color="primary" />}
+            label="Company"
+            labelPlacement="end"
+          />
+        </RadioGroup>
+
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="name"
+          label="Name"
+          name="name"
+          autoComplete="name"
+          autoFocus
+          onChange={this.handleChange}
+        />
+
         <TextField
           variant="outlined"
           margin="normal"
@@ -111,8 +126,8 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
           autoComplete="email"
           autoFocus
           onChange={this.handleChange}
-          className='test'
         />
+
         <TextField
           variant="outlined"
           margin="normal"
@@ -124,33 +139,39 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
           id="password"
           autoComplete="current-password"
           onChange={this.handleChange}
-          error={this.state.error}
         />
-        {this.state.error && <div className="password-error">Wrong password</div>}
+
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          name="confirmPassword"
+          label="Confirm password"
+          type="password"
+          id="confirmPassword"
+          autoComplete="current-password"
+        />
+
         <Button
           type="submit"
           fullWidth
           variant="contained"
           onClick={this.onSubmit}
         >
-          Sign In
-        </Button>
+          Sign Up
+          </Button>
         <Grid container>
-          <Grid item xs>
-            <Link href="#" variant="body2">
-              Forgot password?
-            </Link>
-          </Grid>
           <Grid item>
             <Link
-              component={RouterLink} to={ScreensConstants.SIGNUP}
+              component={RouterLink} to={ScreensConstants.LOGIN}
               href="#"
               variant="body2" >
-              {"Don't have an account? Sign Up"}
+              {"Already have an account? Sign In"}
             </Link>
           </Grid>
         </Grid>
       </Container>
-    )
+    );
   }
 }
