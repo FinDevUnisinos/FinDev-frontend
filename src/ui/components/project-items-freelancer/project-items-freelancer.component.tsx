@@ -6,6 +6,7 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import "./project-items-freelancer.css"
 import ProjectService from '../../../service/project.service'
 import { AxiosError, AxiosResponse } from 'axios'
+import IconButton from '@material-ui/core/IconButton';
 
 interface IProjectItemsFreelancerPropType { }
 
@@ -105,15 +106,15 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
               alignItems="center"
               direction="row"
             >
+              <IconButton
+                color="primary"
+                className="far fa-heart project-items-freelancer-like-icon"
+              ></IconButton>
 
-              <Grid item>
-                <i className="far fa-heart project-items-freelancer-like-icon" />
-              </Grid>
-
-              <Grid item>
-                <i className="far fa-times-circle project-items-freelancer-dislike-icon" />
-              </Grid>
-
+              <IconButton
+                color="secondary"
+                className="far fa-times-circle project-items-freelancer-dislike-icon"
+              ></IconButton>
             </Grid>
 
           </div>
