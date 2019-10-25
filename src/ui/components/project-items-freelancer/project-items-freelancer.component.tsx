@@ -107,11 +107,11 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
             >
 
               <Grid item>
-                <i className="far fa-heart project-items-freelancer-icon" />
+                <i className="far fa-heart project-items-freelancer-like-icon" />
               </Grid>
 
               <Grid item>
-                <i className="far fa-times-circle project-items-freelancer-icon" />
+                <i className="far fa-times-circle project-items-freelancer-dislike-icon" />
               </Grid>
 
             </Grid>

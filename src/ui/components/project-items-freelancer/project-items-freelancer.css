@@ -60,8 +60,15 @@
     text-align: center;
 }
 
-.project-items-freelancer-icon {
+.project-items-freelancer-like-icon {
     font-size: 30px;
     margin: 10px;
     color: rgb(0, 139, 46);
+}
+
+.project-items-freelancer-dislike-icon {
+    font-size: 30px;
+    margin: 10px;
+    color: rgb(235, 42, 42);
+
 }
