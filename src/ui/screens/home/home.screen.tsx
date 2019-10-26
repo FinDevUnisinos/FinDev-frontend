@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react'
 import maps from './home.map'
 import { connect } from 'react-redux'
-import { LateralAccessMenu, IMenuItemType, ContentWrapper, TopMenu, ProjectItemsFreelancer} from 'components/index'
-
+import { LateralAccessMenu, IMenuItemType, ContentWrapper, TopMenu} from 'components/index'
+import {ProjectItemsFreelancer} from './components/project-items-freelancer/project-items-freelancer.component'
 import './home.css'
 
 interface HomeProps {

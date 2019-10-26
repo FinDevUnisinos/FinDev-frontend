@@ -4,7 +4,7 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import "./project-items-freelancer.css"
-import ProjectService from '../../../service/project.service'
+import ProjectService from '../../../../../service/project.service'
 import { AxiosError, AxiosResponse } from 'axios'
 import IconButton from '@material-ui/core/IconButton';
 
