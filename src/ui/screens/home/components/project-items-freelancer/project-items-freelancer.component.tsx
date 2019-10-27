@@ -46,8 +46,13 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
   }
 
   addInterestOnProject(projectId: string, positive: boolean): void {
-    console.log(projectId)
-    console.log(positive)
+    ProjectService.addInterestOnProject(Number.parseInt(projectId), positive)
+      .then((response: AxiosResponse) => {
+        console.log(response.data)
+      })
+      .catch((error: AxiosError) => {
+        console.log(error)
+      })
   }
 
   renderSkill(skillItem: any): JSX.Element {
