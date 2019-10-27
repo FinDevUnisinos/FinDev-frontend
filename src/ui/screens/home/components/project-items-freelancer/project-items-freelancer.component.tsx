@@ -25,6 +25,7 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
     }
     this.renderSkill = this.renderSkill.bind(this)
     this.renderItemProject = this.renderItemProject.bind(this)
+    this.addInterestOnProject = this.addInterestOnProject.bind(this)
   }
 
   componentDidMount() {
@@ -42,6 +43,11 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
       .catch((error: AxiosError) => {
         console.log(error)
       })
+  }
+
+  addInterestOnProject(projectId: string, positive: boolean): void {
+    console.log(projectId)
+    console.log(positive)
   }
 
   renderSkill(skillItem: any): JSX.Element {
@@ -108,11 +114,17 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
             >
               <IconButton
                 color="primary"
+                onClick={() => {
+                  this.addInterestOnProject(projectItem.id, true);
+                }}
                 className="far fa-heart project-items-freelancer-like-icon"
               ></IconButton>
 
               <IconButton
                 color="secondary"
+                onClick={() => {
+                  this.addInterestOnProject(projectItem.id, false);
+                }}
                 className="far fa-times-circle project-items-freelancer-dislike-icon"
               ></IconButton>
             </Grid>
