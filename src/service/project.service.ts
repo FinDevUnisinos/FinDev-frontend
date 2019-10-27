@@ -2,9 +2,7 @@ import CONFIG from 'config/enviroments.config'
 import axios from 'axios'
 
 export default class ProjectService {
-  static getProjects() {
-    console.log("token :")
-    console.log(localStorage.token)
+  static getProjectsAvailableForFreelancers() {
     return axios({
       method: 'POST',
       url: `${CONFIG.API_URL}/project/skills/all/employee`,
@@ -14,4 +12,16 @@ export default class ProjectService {
       },
     })
   }
+
+  static getProjectsOfCompany() {
+    return axios({
+      method: 'POST',
+      url: `${CONFIG.API_URL}/project/skills/all/company`,
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': localStorage.token
+      },
+    })
+  }
+
 }

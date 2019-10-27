@@ -28,7 +28,7 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
   }
 
   componentDidMount() {
-    ProjectService.getProjects()
+    ProjectService.getProjectsAvailableForFreelancers()
       .then((response: AxiosResponse) => {
         this.setState(
           {
