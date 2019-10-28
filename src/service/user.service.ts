@@ -15,4 +15,15 @@ export default class LoginService {
       },
     })
   }
+
+  static getUserType() {
+    return axios({
+      method: 'POST',
+      url: `${CONFIG.API_URL}/user/getUserType`,
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': localStorage.token,
+      },
+    })
+  }
 }

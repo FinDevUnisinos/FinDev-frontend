@@ -56,6 +56,7 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
     LoginService.login(this.state.email, this.state.password)
       .then((response: AxiosResponse) => {
         localStorage.token = response.data
+
         this.setState({
           shouldRedirect: true,
         })
@@ -68,8 +69,8 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
   }
 
   redirectToHome(): JSX.Element {
-    if(this.state.shouldRedirect){
-      return <Redirect to={ScreensConstants.HOME}/>
+    if (this.state.shouldRedirect) {
+      return <Redirect to={ScreensConstants.HOME} />
     }
 
     return <div />
