@@ -28,7 +28,7 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
     this.addInterestOnProject = this.addInterestOnProject.bind(this)
   }
 
-  componentDidMount() {
+  refreshContent() {
     ProjectService.getProjectsAvailableForFreelancers()
       .then((response: AxiosResponse) => {
         this.setState(
@@ -45,10 +45,17 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
       })
   }
 
+  componentDidMount() {
+    this.refreshContent()
+  }
+
   addInterestOnProject(projectId: string, positive: boolean): void {
     ProjectService.addInterestOnProject(Number.parseInt(projectId), positive)
       .then((response: AxiosResponse) => {
         console.log(response.data)
+        //wait half-second
+        new Promise( resolve => setTimeout(resolve, 500) )
+        this.refreshContent()
       })
       .catch((error: AxiosError) => {
         console.log(error)
