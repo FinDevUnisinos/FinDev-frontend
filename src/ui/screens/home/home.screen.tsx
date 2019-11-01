@@ -4,8 +4,6 @@ import { connect } from 'react-redux'
 import { LateralAccessMenu, IMenuItemType, ContentWrapper, TopMenu } from 'components/index'
 import { ProjectItemsFreelancer } from './components/project-items-freelancer/project-items-freelancer.component'
 import './home.css'
-import LoginService from 'service/user.service'
-import { AxiosError, AxiosResponse } from 'axios'
 
 interface HomeProps {
   number: number,
@@ -14,41 +12,12 @@ interface HomeProps {
 }
 
 interface StateType {
-  error: boolean,
-  userType: string
 }
 
 export class HomeScreen extends PureComponent<HomeProps, StateType> {
 
   constructor(props: HomeProps) {
     super(props)
-
-    this.state = {
-      error: false,
-      userType: "",
-    }
-
-  }
-
-  componentWillMount() {
-    let localUserType = ""
-    LoginService.getUserType()
-      .then((response: AxiosResponse) => {
-        localUserType = response.data
-        console.log(localUserType)
-        this.setState({
-          error: false,
-          userType: localUserType,
-        })
-        console.log(this.state.userType)
-      })
-      .catch((error: AxiosError) => {
-        this.setState({
-          ...this.state,
-          error: true,
-        })
-      })
-
   }
 
   getFreelancerMenu(): IMenuItemType[] {
@@ -103,7 +72,7 @@ export class HomeScreen extends PureComponent<HomeProps, StateType> {
 
 
   render(): JSX.Element {
-    if (this.state.userType == "COMPANY") {
+    if (localStorage.userType == "COMPANY") {
       return (
         <ContentWrapper>
           <LateralAccessMenu menuItens={this.getCompanyMenu()} />
@@ -113,7 +82,7 @@ export class HomeScreen extends PureComponent<HomeProps, StateType> {
           </div>
         </ContentWrapper>
       )
-    } else if (this.state.userType == "EMPLOYEE") {
+    } else if (localStorage.userType == "EMPLOYEE") {
       return (
         <ContentWrapper>
           <LateralAccessMenu menuItens={this.getFreelancerMenu()} />

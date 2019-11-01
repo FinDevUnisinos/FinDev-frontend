@@ -2,14 +2,14 @@ import React, { PureComponent } from 'react'
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import LoginService from 'service/user.service'
 import { AxiosError, AxiosResponse } from 'axios'
-import { Redirect } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { ScreensConstants } from 'constants/index'
+
 
 import './login.css'
 
@@ -55,9 +55,22 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
       .then((response: AxiosResponse) => {
         localStorage.token = response.data
 
-        this.setState({
-          shouldRedirect: true,
-        })
+        LoginService.getUserType()
+          .then((response: AxiosResponse) => {
+
+            const localUserType = response.data
+
+            localStorage.userType = localUserType
+
+            this.setState({
+              shouldRedirect: true,
+            })
+          })
+          .catch((error: AxiosError) => {
+            this.setState({
+              error: true,
+            })
+          })
       })
       .catch((error: AxiosError) => {
         this.setState({
@@ -119,12 +132,12 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
         </Button>
         <Grid container>
           <Grid item xs>
-            <Link href="#" variant="body2">
+            <Link to="/home">
               Forgot password?
             </Link>
           </Grid>
           <Grid item>
-            <Link href="#" variant="body2">
+            <Link to="/signup">
               {"Don't have an account? Sign Up"}
             </Link>
           </Grid>
