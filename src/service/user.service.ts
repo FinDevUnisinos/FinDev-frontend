@@ -16,10 +16,10 @@ export default class LoginService {
     })
   }
 
-  static getUserType() {
+  static getUser() {
     return axios({
       method: 'POST',
-      url: `${CONFIG.API_URL}/user/getUserType`,
+      url: `${CONFIG.API_URL}/user/getUser`,
       headers: {
         'Content-Type': 'application/json',
         'x-access-token': localStorage.token,

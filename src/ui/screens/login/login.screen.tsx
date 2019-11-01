@@ -55,12 +55,14 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
       .then((response: AxiosResponse) => {
         localStorage.token = response.data
 
-        LoginService.getUserType()
+        LoginService.getUser()
           .then((response: AxiosResponse) => {
 
-            const localUserType = response.data
+            const localUserData = response.data
 
-            localStorage.userType = localUserType
+            localStorage.userName = localUserData.name
+            localStorage.userType = localUserData.userType
+
 
             this.setState({
               shouldRedirect: true,
