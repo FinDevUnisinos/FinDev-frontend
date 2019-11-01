@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { LateralAccessMenu, IMenuItemType, ContentWrapper, TopMenu } from 'components/index'
 import { ProjectItemsFreelancer } from './components/project-items-freelancer/project-items-freelancer.component'
 import './home.css'
+import { UserTypes } from 'constants/userType.constants'
 
 interface HomeProps {
   number: number,
@@ -72,7 +73,7 @@ export class HomeScreen extends PureComponent<HomeProps, StateType> {
 
 
   render(): JSX.Element {
-    if (localStorage.userType == "COMPANY") {
+    if (localStorage.userType == UserTypes.COMPANY) {
       return (
         <ContentWrapper>
           <LateralAccessMenu menuItens={this.getCompanyMenu()} />
@@ -82,7 +83,7 @@ export class HomeScreen extends PureComponent<HomeProps, StateType> {
           </div>
         </ContentWrapper>
       )
-    } else if (localStorage.userType == "EMPLOYEE") {
+    } else if (localStorage.userType == UserTypes.EMPLOYEE) {
       return (
         <ContentWrapper>
           <LateralAccessMenu menuItens={this.getFreelancerMenu()} />
