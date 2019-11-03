@@ -9,7 +9,6 @@ import LoginService from 'service/user.service'
 import { AxiosError, AxiosResponse } from 'axios'
 import { Link, Redirect } from 'react-router-dom'
 import { ScreensConstants } from 'constants/index'
-import { Link as RouterLink } from 'react-router-dom';
 
 
 import './login.css'
@@ -158,9 +157,7 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
             </Link>
           </Grid>
           <Grid item>
-            <Link
-              component={RouterLink} to={ScreensConstants.SIGNUP}
-             >
+            <Link to={ScreensConstants.SIGNUP}>
               {"Don't have an account? Sign Up"}
             </Link>
           </Grid>
