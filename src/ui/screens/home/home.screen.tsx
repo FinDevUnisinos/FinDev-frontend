@@ -12,8 +12,7 @@ interface HomeProps {
   decrement: () => any,
 }
 
-interface StateType {
-}
+interface StateType { }
 
 export class HomeScreen extends PureComponent<HomeProps, StateType> {
 

@@ -23,6 +23,7 @@ export default class ProjectService {
       },
     })
   }
+  
   static addInterestOnProject(projectId: number, positive: boolean) {
     return axios({
       method: 'POST',

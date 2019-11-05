@@ -2,6 +2,7 @@ import CONFIG from 'config/enviroments.config'
 import axios from 'axios'
 
 export default class LoginService {
+
   static login(email: string, password: string) {
     return axios({
       method: 'POST',
@@ -26,8 +27,8 @@ export default class LoginService {
       }
     })
   }
-        
-   static signUp(name: string, email: string, password: string, userType: string) {
+
+  static signUp(name: string, email: string, password: string, userType: string) {
     return axios({
       method: 'POST',
       url: `${CONFIG.API_URL}/user/signup`,
