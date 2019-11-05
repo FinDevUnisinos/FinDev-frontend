@@ -2,8 +2,9 @@ import React, { PureComponent } from 'react'
 import maps from './home.map'
 import { connect } from 'react-redux'
 import { LateralAccessMenu, IMenuItemType, ContentWrapper, TopMenu } from 'components/index'
-
+import { ProjectItemsFreelancer } from './components/project-items-freelancer/project-items-freelancer.component'
 import './home.css'
+import { UserTypes } from 'constants/userType.constants'
 
 interface HomeProps {
   number: number,
@@ -14,6 +15,10 @@ interface HomeProps {
 interface StateType { }
 
 export class HomeScreen extends PureComponent<HomeProps, StateType> {
+
+  constructor(props: HomeProps) {
+    super(props)
+  }
 
   getFreelancerMenu(): IMenuItemType[] {
     return [
@@ -40,20 +45,60 @@ export class HomeScreen extends PureComponent<HomeProps, StateType> {
     ]
   }
 
+  getCompanyMenu(): IMenuItemType[] {
+    return [
+      {
+        text: 'FreeLancers',
+        path: '/',
+        isMain: true,
+      },
+      {
+        text: 'Projects',
+        path: '/',
+        isMain: false,
+      },
+      {
+        text: 'Messages',
+        path: '/',
+        isMain: false,
+      },
+      {
+        text: 'Accepted',
+        path: '/',
+        isMain: false,
+      }
+    ]
+  }
+
+
   render(): JSX.Element {
-    return (
-      <ContentWrapper>
-        <LateralAccessMenu menuItens={this.getFreelancerMenu()} />
-        <div className="home-content">
-          <TopMenu />
-          <div>
-            number: {this.props.number}
+    if (localStorage.userType == UserTypes.COMPANY) {
+      return (
+        <ContentWrapper>
+          <LateralAccessMenu menuItens={this.getCompanyMenu()} />
+          <div className="home-content">
+            <TopMenu />
+
           </div>
-          <button onClick={this.props.increment}>increment</button>
-          <button onClick={this.props.decrement}>decrement</button>
-        </div>
-      </ContentWrapper>
-    )
+        </ContentWrapper>
+      )
+    } else if (localStorage.userType == UserTypes.EMPLOYEE) {
+      return (
+        <ContentWrapper>
+          <LateralAccessMenu menuItens={this.getFreelancerMenu()} />
+          <div className="home-content">
+            <TopMenu />
+            <ProjectItemsFreelancer />
+          </div>
+        </ContentWrapper>
+      )
+    } else {
+      return (
+        <ContentWrapper>
+          Signing...
+        </ContentWrapper>
+      )
+    }
   }
 }
 

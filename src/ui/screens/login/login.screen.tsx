@@ -2,15 +2,14 @@ import React, { PureComponent } from 'react'
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import LoginService from 'service/user.service'
 import { AxiosError, AxiosResponse } from 'axios'
-import { Redirect } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { ScreensConstants } from 'constants/index'
-import { Link as RouterLink } from 'react-router-dom';
+
 
 import './login.css'
 
@@ -64,9 +63,25 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
     LoginService.login(this.state.email, this.state.password)
       .then((response: AxiosResponse) => {
         localStorage.token = response.data
-        this.setState({
-          shouldRedirect: true,
-        })
+
+        LoginService.getUser()
+          .then((response: AxiosResponse) => {
+
+            const localUserData = response.data
+
+            localStorage.userName = localUserData.name
+            localStorage.userType = localUserData.userType
+
+
+            this.setState({
+              shouldRedirect: true,
+            })
+          })
+          .catch((error: AxiosError) => {
+            this.setState({
+              error: true,
+            })
+          })
       })
       .catch((error: AxiosError) => {
         this.setState({
@@ -76,8 +91,8 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
   }
 
   redirectToHome(): JSX.Element {
-    if(this.state.shouldRedirect){
-      return <Redirect to={ScreensConstants.HOME}/>
+    if (this.state.shouldRedirect) {
+      return <Redirect to={ScreensConstants.HOME} />
     }
 
     return <div />
@@ -137,15 +152,12 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
         </Button>
         <Grid container>
           <Grid item xs>
-            <Link href="#" variant="body2">
+            <Link to="/home">
               Forgot password?
             </Link>
           </Grid>
           <Grid item>
-            <Link
-              component={RouterLink} to={ScreensConstants.SIGNUP}
-              href="#"
-              variant="body2" >
+            <Link to={ScreensConstants.SIGNUP}>
               {"Don't have an account? Sign Up"}
             </Link>
           </Grid>

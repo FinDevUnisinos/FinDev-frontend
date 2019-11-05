@@ -60,9 +60,25 @@ export class SignUpScreen extends PureComponent<SignUpProps, SignUpState>{
     LoginService.signUp(this.state.name, this.state.email, this.state.password, this.state.userType)
       .then((response: AxiosResponse) => {
         localStorage.token = response.data
-        this.setState({
-          shouldRedirect: true,
-        })
+
+        LoginService.getUser()
+          .then((response: AxiosResponse) => {
+
+            const localUserData = response.data
+
+            localStorage.userName = localUserData.name
+            localStorage.userType = localUserData.userType
+
+
+            this.setState({
+              shouldRedirect: true,
+            })
+          })
+          .catch((error: AxiosError) => {
+            this.setState({
+              error: true,
+            })
+          })
       })
       .catch((error: AxiosError) => {
         this.setState({

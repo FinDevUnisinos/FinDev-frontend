@@ -25,8 +25,8 @@ export class TopMenu extends PureComponent<ITopMenuPropType, ITopMenuStateType>{
           direction="column"
           justify="space-between"
         >
-          <div className="top-menu-user-name">Username</div>
-          <div className="top-menu-user-title">Subtitle</div>
+          <div className="top-menu-user-name">{localStorage.userName}</div>
+          <div className="top-menu-user-title">{localStorage.userType}</div>
         </Grid>
       </Grid>
     )
