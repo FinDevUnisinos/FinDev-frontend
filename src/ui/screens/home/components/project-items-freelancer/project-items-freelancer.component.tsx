@@ -7,6 +7,7 @@ import "./project-items-freelancer.css"
 import ProjectService from '../../../../../service/project.service'
 import { AxiosError, AxiosResponse } from 'axios'
 import IconButton from '@material-ui/core/IconButton';
+import { ContentWrapper } from 'components/index';
 
 interface IProjectItemsFreelancerPropType { }
 
@@ -150,16 +151,19 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
 
   render(): JSX.Element {
     return (
-      <GridList className="project-items-freelancer-grid-list">
-        <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-          <ListSubheader component="div">Projects</ListSubheader>
-        </GridListTile>
-        {
-          this.state.data.map(
-            this.renderItemProject
-          )
-        }
-      </GridList>
+      <ContentWrapper>
+        <GridList className="project-items-freelancer-grid-list">
+          <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
+            <ListSubheader component="div">Projects</ListSubheader>
+          </GridListTile>
+          {
+            this.state.data.map(
+              this.renderItemProject
+            )
+          }
+        </GridList>
+      </ContentWrapper>
+
     )
   }
 }
