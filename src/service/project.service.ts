@@ -39,4 +39,42 @@ export default class ProjectService {
     })
   }
 
+  static editProject(projectId: number){
+    return axios({
+      method: 'POST',
+      url: `${CONFIG.API_URL}/project/edit`,
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': localStorage.token
+      },
+      data: {
+        projectId
+      },
+    })
+  }
+
+  static deleteProject(projectId: number){
+    return axios({
+      method: 'POST',
+      url: `${CONFIG.API_URL}/project/delete`,
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': localStorage.token
+      },
+      data: {
+        projectId
+      },
+    })
+  }
+
+  static addProject(){
+    return axios({
+      method: 'POST',
+      url: `${CONFIG.API_URL}/project/add`,
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': localStorage.token
+      },
+    })
+  }
 }

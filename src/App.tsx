@@ -7,6 +7,7 @@ import { store } from 'app_redux/index'
 
 import { BrowserRouter, Route, Redirect } from 'react-router-dom'
 import { SignUpScreen } from 'screens/signup/signUp.screen'
+import { ProjectItemsFreelancer, ProjectItemsCompany } from 'screens/home/components/index'
 
 interface AppProps { }
 
@@ -19,6 +20,8 @@ export class App extends React.Component<AppProps, {}> {
             <Route exact path={ScreensConstants.LOGIN} component={LoginScreen} />
             <Route exact path={ScreensConstants.HOME} component={Home} />
             <Route exact path={ScreensConstants.SIGNUP} component={SignUpScreen} />
+            <Route exact path={ScreensConstants.COMPANYPROJECTS} component={ProjectItemsCompany} />
+            <Route exact path={ScreensConstants.FREELANCERPROJECTS} component={ProjectItemsFreelancer} />
             <Redirect to={ScreensConstants.LOGIN} />
           </BrowserRouter>
         </Provider>
