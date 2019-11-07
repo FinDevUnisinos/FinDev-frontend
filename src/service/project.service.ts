@@ -2,6 +2,16 @@ import CONFIG from 'config/enviroments.config'
 import axios from 'axios'
 
 export default class ProjectService {
+  static getProjectsAndInterestedFreelancers(){
+    return axios({
+      method: 'POST',
+      url: `${CONFIG.API_URL}/project/interests/all`,
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': localStorage.token
+      },
+    })
+  }
   static getProjectsAvailableForFreelancers() {
     return axios({
       method: 'POST',
@@ -23,7 +33,7 @@ export default class ProjectService {
       },
     })
   }
-  
+
   static addInterestOnProject(projectId: number, positive: boolean) {
     return axios({
       method: 'POST',
