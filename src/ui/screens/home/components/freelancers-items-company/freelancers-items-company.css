@@ -1,0 +1,72 @@
+.freelancers-items-company-container {
+  height: auto;
+  width: 50%;
+  padding: 10px;
+}
+
+.freelancers-items-company-subcontainer {
+  padding: 2%;
+}
+
+.freelancers-items-company-subsubcontainer {
+  padding: 2%;
+  border: 1px solid #CFCFCF;
+}
+
+.freelancer-items-company-grid-list {
+  min-height: 230px;
+  height: auto;
+  display: 'flex';
+  flex: 'wrap';
+  justify-content: 'space-around';
+  overflow: 'hidden';
+  background-color: rgb(222, 222, 222);
+}
+
+.project-items-freelancer-grid-list {
+  min-height: 230px;
+  height: auto;
+  display: 'flex';
+  flex: 'wrap';
+  justify-content: 'space-around';
+  overflow: 'hidden';
+  background-color: rgb(222, 222, 222);
+}
+
+.project-items-freelancer-text {
+  margin: 10px;
+  min-height: 55px;
+  text-align: justify;
+  padding-left: 15%;
+  padding-right: 15%;
+}
+
+.project-items-freelancer-skill-text {
+  margin: 10px;
+  text-align: justify;
+  padding-left: 15%;
+  padding-right: 15%;
+}
+
+.freelancer-item-name {
+  margin: 10px;
+  font-size: 20px;
+  min-height: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.project-item-skills-title {
+  margin: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 1px solid #E8E8E8;
+}
+
+.project-skills {
+  margin: 10px;
+  font-size: 14px;
+  text-align: center;
+}
+
