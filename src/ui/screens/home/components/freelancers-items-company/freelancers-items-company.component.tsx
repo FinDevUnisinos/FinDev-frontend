@@ -7,7 +7,7 @@ import "./freelancers-items-company.css"
 import ProjectService from '../../../../../service/project.service'
 import { AxiosError, AxiosResponse } from 'axios'
 import IconButton from '@material-ui/core/IconButton';
-import { ContentWrapper } from 'components/';
+import { ContentWrapper } from 'components/index';
 
 interface IFreelancersItemsCompanyPropType { }
 
