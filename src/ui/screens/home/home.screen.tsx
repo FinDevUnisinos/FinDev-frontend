@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react'
 import maps from './home.map'
 import { connect } from 'react-redux'
-import { LateralAccessMenu, IMenuItemType, ContentWrapper, TopMenu } from 'components/index'
+import { ContentWrapper } from 'components/index'
 import { ProjectItemsFreelancer } from './components/project-items-freelancer/project-items-freelancer.component'
-import { ProjectItemsCompany } from './components/project-items-company/project-items-company.component'
 import './home.css'
 import { UserTypes } from 'constants/userType.constants'
+import { FreelancersItemsCompany } from './components/freelancers-items-company/freelancers-items-company.component'
 
 interface HomeProps {
   number: number,
@@ -24,7 +24,7 @@ export class HomeScreen extends PureComponent<HomeProps, StateType> {
   render(): JSX.Element {
     if (localStorage.userType == UserTypes.COMPANY) {
       return (
-        <ProjectItemsCompany />
+        <FreelancersItemsCompany />
       )
     } else if (localStorage.userType == UserTypes.EMPLOYEE) {
       return (

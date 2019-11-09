@@ -22,7 +22,7 @@ export class ContentWrapperComponent extends PureComponent<IContentWrapperPropTy
       return [
         {
           text: 'FreeLancers',
-          path: '/',
+          path: '/home',
           isMain: true,
         },
         {

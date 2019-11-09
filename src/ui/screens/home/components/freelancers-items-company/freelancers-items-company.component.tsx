@@ -7,6 +7,7 @@ import "./freelancers-items-company.css"
 import ProjectService from '../../../../../service/project.service'
 import { AxiosError, AxiosResponse } from 'axios'
 import IconButton from '@material-ui/core/IconButton';
+import { ContentWrapper } from 'components/';
 
 interface IFreelancersItemsCompanyPropType { }
 
@@ -144,13 +145,13 @@ export class FreelancersItemsCompany extends PureComponent<IFreelancersItemsComp
 
   render(): JSX.Element {
     return (
-      <div>
+      <ContentWrapper>
         {
           this.state.data.map(
             this.renderItemProject
           )
         }
-      </div>
+      </ContentWrapper>
     )
   }
 }
