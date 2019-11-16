@@ -27,7 +27,7 @@ export class ProjectItemsCompany extends PureComponent<IProjectItemsCompanyPropT
     this.renderSkill = this.renderSkill.bind(this)
     this.renderItemProject = this.renderItemProject.bind(this)
     this.editProject = this.editProject.bind(this)
-    this.deleteProject = this.deleteProject.bind(this)
+    this.closeProject = this.closeProject.bind(this)
   }
 
   refreshContent() {
@@ -62,8 +62,8 @@ export class ProjectItemsCompany extends PureComponent<IProjectItemsCompanyPropT
       })
   }
 
-  deleteProject(projectId: string): void{
-    ProjectService.editProject(Number.parseInt(projectId))
+  closeProject(projectId: string): void{
+    ProjectService.closeProject(Number.parseInt(projectId))
       .then((response: AxiosResponse) => {
         console.log(response.data)
         new Promise( resolve => setTimeout(resolve, 500) )
@@ -158,7 +158,7 @@ export class ProjectItemsCompany extends PureComponent<IProjectItemsCompanyPropT
               <IconButton
                 color="secondary"
                 onClick={() => {
-                  this.deleteProject(projectItem.id);
+                  this.closeProject(projectItem.id);
                 }}
                 className="far fa-times-circle project-items-company-delete-icon"
               ></IconButton>
@@ -167,7 +167,7 @@ export class ProjectItemsCompany extends PureComponent<IProjectItemsCompanyPropT
           </div>
         </div>
 
-      </Grid>  
+      </Grid>
     )
   }
 

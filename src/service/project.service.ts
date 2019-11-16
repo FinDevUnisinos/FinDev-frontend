@@ -63,16 +63,16 @@ export default class ProjectService {
     })
   }
 
-  static deleteProject(projectId: number){
+  static closeProject(projectId: number){
     return axios({
       method: 'POST',
-      url: `${CONFIG.API_URL}/project/delete`,
+      url: `${CONFIG.API_URL}/project/close`,
       headers: {
         'Content-Type': 'application/json',
         'x-access-token': localStorage.token
       },
       data: {
-        projectId
+        id: projectId
       },
     })
   }
