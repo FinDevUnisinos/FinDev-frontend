@@ -1,10 +1,11 @@
 import React, { PureComponent } from 'react'
 import maps from './home.map'
 import { connect } from 'react-redux'
-import { LateralAccessMenu, IMenuItemType, ContentWrapper, TopMenu } from 'components/index'
+import { ContentWrapper } from 'components/index'
 import { ProjectItemsFreelancer } from './components/project-items-freelancer/project-items-freelancer.component'
 import './home.css'
 import { UserTypes } from 'constants/userType.constants'
+import { FreelancersItemsCompany } from './components/freelancers-items-company/freelancers-items-company.component'
 
 interface HomeProps {
   number: number,
@@ -20,77 +21,14 @@ export class HomeScreen extends PureComponent<HomeProps, StateType> {
     super(props)
   }
 
-  getFreelancerMenu(): IMenuItemType[] {
-    return [
-      {
-        text: 'Projects',
-        path: '/',
-        isMain: true,
-      },
-      {
-        text: 'Liked',
-        path: '/',
-        isMain: false,
-      },
-      {
-        text: 'Messages',
-        path: '/',
-        isMain: false,
-      },
-      {
-        text: 'Accepted',
-        path: '/',
-        isMain: false,
-      }
-    ]
-  }
-
-  getCompanyMenu(): IMenuItemType[] {
-    return [
-      {
-        text: 'FreeLancers',
-        path: '/',
-        isMain: true,
-      },
-      {
-        text: 'Projects',
-        path: '/',
-        isMain: false,
-      },
-      {
-        text: 'Messages',
-        path: '/',
-        isMain: false,
-      },
-      {
-        text: 'Accepted',
-        path: '/',
-        isMain: false,
-      }
-    ]
-  }
-
-
   render(): JSX.Element {
     if (localStorage.userType == UserTypes.COMPANY) {
       return (
-        <ContentWrapper>
-          <LateralAccessMenu menuItens={this.getCompanyMenu()} />
-          <div className="home-content">
-            <TopMenu />
-
-          </div>
-        </ContentWrapper>
+        <FreelancersItemsCompany />
       )
     } else if (localStorage.userType == UserTypes.EMPLOYEE) {
       return (
-        <ContentWrapper>
-          <LateralAccessMenu menuItens={this.getFreelancerMenu()} />
-          <div className="home-content">
-            <TopMenu />
-            <ProjectItemsFreelancer />
-          </div>
-        </ContentWrapper>
+        <ProjectItemsFreelancer />
       )
     } else {
       return (

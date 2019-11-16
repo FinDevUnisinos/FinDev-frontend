@@ -1,23 +1,23 @@
 import React, { PureComponent } from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid, Button } from '@material-ui/core'
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import ListSubheader from '@material-ui/core/ListSubheader';
-import "./project-items-freelancer.css"
+import "./project-items-company.css"
 import ProjectService from '../../../../../service/project.service'
 import { AxiosError, AxiosResponse } from 'axios'
 import IconButton from '@material-ui/core/IconButton';
-import { ContentWrapper } from 'components/index';
+import { ContentWrapper } from 'components/index'
 
-interface IProjectItemsFreelancerPropType { }
+interface IProjectItemsCompanyPropType { }
 
-interface IProjectItemsFreelancerStateType {
+interface IProjectItemsCompanyStateType {
   data: any,
   error: boolean,
 }
 
-export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelancerPropType, IProjectItemsFreelancerStateType>{
-  constructor(props: IProjectItemsFreelancerPropType) {
+export class ProjectItemsCompany extends PureComponent<IProjectItemsCompanyPropType, IProjectItemsCompanyStateType>{
+  constructor(props: IProjectItemsCompanyPropType) {
     super(props)
 
     this.state = {
@@ -26,11 +26,12 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
     }
     this.renderSkill = this.renderSkill.bind(this)
     this.renderItemProject = this.renderItemProject.bind(this)
-    this.addInterestOnProject = this.addInterestOnProject.bind(this)
+    this.editProject = this.editProject.bind(this)
+    this.closeProject = this.closeProject.bind(this)
   }
 
   refreshContent() {
-    ProjectService.getProjectsAvailableForFreelancers()
+    ProjectService.getProjectsOfCompany()
       .then((response: AxiosResponse) => {
         this.setState(
           {
@@ -39,7 +40,6 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
           }
         )
         console.log(response.data)
-
       })
       .catch((error: AxiosError) => {
         console.log(error)
@@ -50,11 +50,34 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
     this.refreshContent()
   }
 
-  addInterestOnProject(projectId: string, positive: boolean): void {
-    ProjectService.addInterestOnProject(Number.parseInt(projectId), positive)
+  editProject(projectId: string): void {
+    ProjectService.editProject(Number.parseInt(projectId))
       .then((response: AxiosResponse) => {
         console.log(response.data)
-        //wait half-second
+        new Promise( resolve => setTimeout(resolve, 500) )
+        this.refreshContent()
+      })
+      .catch((error: AxiosError) => {
+        console.log(error)
+      })
+  }
+
+  closeProject(projectId: string): void{
+    ProjectService.closeProject(Number.parseInt(projectId))
+      .then((response: AxiosResponse) => {
+        console.log(response.data)
+        new Promise( resolve => setTimeout(resolve, 500) )
+        this.refreshContent()
+      })
+      .catch((error: AxiosError) => {
+        console.log(error)
+      })
+  }
+
+  addProject(): void{
+    ProjectService.addProject()
+      .then((response: AxiosResponse) => {
+        console.log(response.data)
         new Promise( resolve => setTimeout(resolve, 500) )
         this.refreshContent()
       })
@@ -67,7 +90,7 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
     return (
       <Grid
         item
-        className="project-items-freelancer-skill-text"
+        className="project-items-company-skill-text"
       >
         {skillItem.skill && skillItem.skill.description} ({skillItem.level == null ? "No skills!" : skillItem.level})
       </Grid>
@@ -77,7 +100,7 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
   renderItemProject(projectItem: any): JSX.Element {
     return (
       <Grid
-        className="project-items-freelancer-container"
+        className="project-items-company-container"
         item
         xs={6}
         sm={6}
@@ -86,8 +109,8 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
         justify="flex-start"
         direction="column"
       >
-        <div className="project-items-freelancer-subcontainer">
-          <div className="project-items-freelancer-subsubcontainer">
+        <div className="project-items-company-subcontainer">
+          <div className="project-items-company-subsubcontainer">
             <Grid
               item
               className="project-item-title"
@@ -98,7 +121,7 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
 
             <Grid
               item
-              className="project-items-freelancer-text"
+              className="project-items-company-text"
             >
               {projectItem.description}
             </Grid>
@@ -117,7 +140,6 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
               </div>
             </Grid>
 
-
             <Grid
               container
               spacing={2}
@@ -128,17 +150,17 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
               <IconButton
                 color="primary"
                 onClick={() => {
-                  this.addInterestOnProject(projectItem.id, true);
+                  this.editProject(projectItem.id);
                 }}
-                className="far fa-heart project-items-freelancer-like-icon"
+                className="fas fa-pencil-alt project-items-company-edit-icon"
               ></IconButton>
 
               <IconButton
                 color="secondary"
                 onClick={() => {
-                  this.addInterestOnProject(projectItem.id, false);
+                  this.closeProject(projectItem.id);
                 }}
-                className="far fa-times-circle project-items-freelancer-dislike-icon"
+                className="far fa-times-circle project-items-company-delete-icon"
               ></IconButton>
             </Grid>
 
@@ -152,9 +174,18 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
   render(): JSX.Element {
     return (
       <ContentWrapper>
-        <GridList className="project-items-freelancer-grid-list">
+        <GridList className="project-items-company-grid-list">
           <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-            <ListSubheader component="div">Projects</ListSubheader>
+            <ListSubheader component="div">
+              <IconButton
+                color="primary"
+                onClick={() => {
+                  this.addProject();
+                }}
+                className="fas fa-plus project-items-company-delete-icon"
+              ></IconButton>
+              Projects
+            </ListSubheader>
           </GridListTile>
           {
             this.state.data.map(
@@ -163,7 +194,6 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
           }
         </GridList>
       </ContentWrapper>
-
     )
   }
 }
