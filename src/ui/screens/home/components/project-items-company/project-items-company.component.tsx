@@ -8,12 +8,15 @@ import ProjectService from '../../../../../service/project.service'
 import { AxiosError, AxiosResponse } from 'axios'
 import IconButton from '@material-ui/core/IconButton';
 import { ContentWrapper } from 'components/index'
+import { Redirect } from 'react-router-dom'
+import { ScreensConstants } from 'constants/index'
 
 interface IProjectItemsCompanyPropType { }
 
 interface IProjectItemsCompanyStateType {
   data: any,
   error: boolean,
+  shouldRedirectToNewProject: boolean,
 }
 
 export class ProjectItemsCompany extends PureComponent<IProjectItemsCompanyPropType, IProjectItemsCompanyStateType>{
@@ -23,11 +26,13 @@ export class ProjectItemsCompany extends PureComponent<IProjectItemsCompanyPropT
     this.state = {
       data: [],
       error: false,
+      shouldRedirectToNewProject: false,
     }
     this.renderSkill = this.renderSkill.bind(this)
     this.renderItemProject = this.renderItemProject.bind(this)
     this.editProject = this.editProject.bind(this)
     this.closeProject = this.closeProject.bind(this)
+    this.addProject = this.addProject.bind(this)
   }
 
   refreshContent() {
@@ -54,7 +59,7 @@ export class ProjectItemsCompany extends PureComponent<IProjectItemsCompanyPropT
     ProjectService.editProject(Number.parseInt(projectId))
       .then((response: AxiosResponse) => {
         console.log(response.data)
-        new Promise( resolve => setTimeout(resolve, 500) )
+        new Promise(resolve => setTimeout(resolve, 500))
         this.refreshContent()
       })
       .catch((error: AxiosError) => {
@@ -62,11 +67,11 @@ export class ProjectItemsCompany extends PureComponent<IProjectItemsCompanyPropT
       })
   }
 
-  closeProject(projectId: string): void{
+  closeProject(projectId: string): void {
     ProjectService.closeProject(Number.parseInt(projectId))
       .then((response: AxiosResponse) => {
         console.log(response.data)
-        new Promise( resolve => setTimeout(resolve, 500) )
+        new Promise(resolve => setTimeout(resolve, 500))
         this.refreshContent()
       })
       .catch((error: AxiosError) => {
@@ -74,16 +79,10 @@ export class ProjectItemsCompany extends PureComponent<IProjectItemsCompanyPropT
       })
   }
 
-  addProject(): void{
-    ProjectService.addProject()
-      .then((response: AxiosResponse) => {
-        console.log(response.data)
-        new Promise( resolve => setTimeout(resolve, 500) )
-        this.refreshContent()
-      })
-      .catch((error: AxiosError) => {
-        console.log(error)
-      })
+  addProject(): void {
+    this.setState({
+      shouldRedirectToNewProject: true
+    })
   }
 
   renderSkill(skillItem: any): JSX.Element {
@@ -174,6 +173,9 @@ export class ProjectItemsCompany extends PureComponent<IProjectItemsCompanyPropT
   render(): JSX.Element {
     return (
       <ContentWrapper>
+        {this.state.shouldRedirectToNewProject &&
+          <Redirect to={ScreensConstants.NEW_PROJECT} />
+        }
         <GridList className="project-items-company-grid-list">
           <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
             <ListSubheader component="div">
