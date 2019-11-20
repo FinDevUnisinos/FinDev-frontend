@@ -6,6 +6,7 @@ import { ProjectItemsFreelancer } from './components/project-items-freelancer/pr
 import './home.css'
 import { UserTypes } from 'constants/userType.constants'
 import { FreelancersItemsCompany } from './components/freelancers-items-company/freelancers-items-company.component'
+import { ScreensConstants } from 'constants/index'
 
 interface HomeProps {
   number: number,
@@ -19,6 +20,7 @@ export class HomeScreen extends PureComponent<HomeProps, StateType> {
 
   constructor(props: HomeProps) {
     super(props)
+    localStorage.currentPath = ScreensConstants.HOME
   }
 
   render(): JSX.Element {
