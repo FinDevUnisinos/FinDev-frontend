@@ -6,9 +6,9 @@ import { Provider } from 'react-redux'
 import { store } from 'app_redux/index'
 
 import { BrowserRouter, Route, Redirect } from 'react-router-dom'
-import { SignUpScreen } from 'screens/signup/signUp.screen'
-import { ProjectItemsFreelancer, ProjectItemsCompany } from 'screens/home/components/index'
+import { SignUpScreen, CreateProjectScreen} from 'screens/index'
 
+import { ProjectItemsFreelancer, ProjectItemsCompany } from 'screens/home/components/index'
 interface AppProps { }
 
 export class App extends React.Component<AppProps, {}> {
@@ -22,6 +22,7 @@ export class App extends React.Component<AppProps, {}> {
             <Route exact path={ScreensConstants.SIGNUP} component={SignUpScreen} />
             <Route exact path={ScreensConstants.COMPANYPROJECTS} component={ProjectItemsCompany} />
             <Route exact path={ScreensConstants.FREELANCERPROJECTS} component={ProjectItemsFreelancer} />
+            <Route exact path={ScreensConstants.NEW_PROJECT} component={CreateProjectScreen} />
             <Redirect to={ScreensConstants.LOGIN} />
           </BrowserRouter>
         </Provider>
