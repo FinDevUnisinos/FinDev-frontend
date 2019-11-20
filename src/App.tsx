@@ -6,9 +6,9 @@ import { Provider } from 'react-redux'
 import { store } from 'app_redux/index'
 
 import { BrowserRouter, Route, Redirect } from 'react-router-dom'
-import { SignUpScreen, CreateProjectScreen } from 'screens/index'
-import { ProjectItemsFreelancer, ProjectItemsCompany } from 'screens/home/components/index'
+import { SignUpScreen, CreateProjectScreen} from 'screens/index'
 
+import { ProjectItemsFreelancer, ProjectItemsCompany } from 'screens/home/components/index'
 interface AppProps { }
 
 export class App extends React.Component<AppProps, {}> {

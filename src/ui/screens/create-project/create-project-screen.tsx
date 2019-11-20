@@ -1,25 +1,148 @@
 import React, { PureComponent } from 'react'
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { ScreensConstants } from 'constants/index'
-import { Link as RouterLink } from 'react-router-dom';
+import { Redirect } from 'react-router-dom'
 import { ContentWrapper } from 'components/index'
 import {
-  Select, MenuItem, InputLabel, Table, TableHead,
-  TableBody, TableCell, TableRow
-} from '@material-ui/core';
-
-
+  InputLabel, Table, TableHead,
+  TableBody, TableCell, TableRow, NativeSelect
+} from '@material-ui/core'
 import "./create-project-screen.css"
+import { AxiosResponse, AxiosError } from 'axios'
+import ProjectService, { ISkillTableItem } from 'service/project.service'
+import SkillService from 'service/skill.service'
 
 interface CreateProjectProps { }
 
-interface CreateProjectState { }
+interface CreateProjectState {
+  name: string,
+  description: string,
+  skillId: number,
+  level: number,
+  listSkills: ISkillTableItem[],
+  error: boolean,
+  shouldRedirect: boolean,
+  refresh: boolean,
+  skillsData: any
+}
 
 export class CreateProjectScreen extends PureComponent<CreateProjectProps, CreateProjectState>{
+  constructor(props: CreateProjectProps) {
+    super(props)
+
+    this.state = {
+      name: '',
+      description: '',
+      skillId: 1,
+      level: 1,
+      listSkills: [],
+      error: false,
+      shouldRedirect: false,
+      refresh: false,
+      skillsData: []
+    }
+
+    this.renderAddSkill = this.renderAddSkill.bind(this)
+    this.deleteSkill = this.deleteSkill.bind(this)
+    this.includeSkill = this.includeSkill.bind(this)
+    this.renderItemTable = this.renderItemTable.bind(this)
+    this.loadEachSkill = this.loadEachSkill.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.render = this.render.bind(this)
+    this.refreshSkillsContent = this.refreshSkillsContent.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
+    this.redirectToProjectPage = this.redirectToProjectPage.bind(this)
+  }
+
+  onSubmit() {
+    ProjectService.addProject(
+      this.state.name,
+      this.state.description,
+      this.state.listSkills
+    )
+      .then((response: AxiosResponse) => {
+        this.setState({
+          shouldRedirect: true,
+        })
+
+      })
+      .catch((error: AxiosError) => {
+        this.setState({
+          error: true,
+        })
+      })
+  }
+
+  handleChange(event: React.ChangeEvent<{
+    name?: string;
+    value: unknown;
+  }>) {
+    const target = event.currentTarget
+    const value = target.value
+    let nameloc = target.name
+    nameloc = nameloc == undefined ? "" : nameloc
+    this.setState({
+      [nameloc]: value
+    } as Pick<CreateProjectState, any>)
+  }
+
+  refreshSkillsContent() {
+    SkillService.getAllSkills()
+      .then((response: AxiosResponse) => {
+        this.setState(
+          {
+            ...this.state,
+            skillsData: response.data,
+          }
+        )
+      })
+      .catch((error: AxiosError) => {
+        console.log(error)
+      })
+  }
+
+  componentDidMount() {
+    this.refreshSkillsContent()
+  }
+
+  includeSkill(): void {
+
+    let hasItemYet = false
+    this.state.listSkills.forEach(element => {
+      hasItemYet = hasItemYet || element.skillId == this.state.skillId
+    });
+
+    if (!hasItemYet) {
+      this.state.listSkills.push(
+        {
+          "skillId": this.state.skillId,
+          "level": this.state.level
+        }
+      )
+
+      this.setState({
+        refresh: !this.state.refresh
+      } as Pick<CreateProjectState, any>)
+    }
+  }
+
+  deleteSkill(value: number): void {
+
+    delete this.state.listSkills[value]
+
+    this.setState({
+      refresh: !this.state.refresh
+    } as Pick<CreateProjectState, any>)
+  }
+
+  loadEachSkill(skill: any): any {
+    return (
+      <option value={skill.id}>{skill.description}</option>
+    )
+  }
 
   renderAddSkill(): JSX.Element {
     return (
@@ -31,21 +154,35 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
           xs={3}
         >
           <InputLabel>Skill</InputLabel>
-          <Select className="create-project-select">
-            <MenuItem value={1}>Test 1</MenuItem>
-            <MenuItem value={2}>Test 2</MenuItem>
-            <MenuItem value={3}>Test 3</MenuItem>
-          </Select>
+          <NativeSelect
+            className="create-project-select"
+            value={this.state.skillId}
+            onChange={this.handleChange}
+            inputProps={{
+              name: 'skillId',
+              id: 'skillId'
+            }}
+          >
+            {this.state.skillsData.map(this.loadEachSkill)}
+          </NativeSelect>
         </Grid>
         <Grid item
           xs={3}
         >
           <InputLabel>Level</InputLabel>
-          <Select className="create-project-select">
-            <MenuItem value={1}>Test 1</MenuItem>
-            <MenuItem value={2}>Test 2</MenuItem>
-            <MenuItem value={3}>Test 3</MenuItem>
-          </Select>
+          <NativeSelect
+            className="create-project-select"
+            value={this.state.level}
+            onChange={this.handleChange}
+            inputProps={{
+              name: 'level',
+              id: 'level'
+            }}
+          >
+            <option value={1}>One</option>
+            <option value={2}>Two</option>
+            <option value={3}>Three</option>
+          </NativeSelect>
         </Grid>
         <Grid item
           xs={3}
@@ -53,11 +190,38 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
           <Button
             variant="contained"
             color="primary"
+            onClick={this.includeSkill}
           >
             Add skill
-              </Button>
+          </Button>
         </Grid>
       </Grid>
+    )
+  }
+
+  renderItemTable(skillItem: any, i: number): JSX.Element {
+    return (
+      <TableRow>
+        <TableCell component="th" scope="row">
+          {skillItem.skillId}
+        </TableCell>
+        <TableCell align="right">
+          {skillItem.level}
+        </TableCell>
+        <TableCell align="right">
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={
+              () => {
+                this.deleteSkill(i)
+              }
+            }
+          >
+            Remove
+        </Button>
+        </TableCell>
+      </TableRow>
     )
   }
 
@@ -73,31 +237,25 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
-              <TableCell component="th" scope="row">
-                React
-            </TableCell>
-              <TableCell align="right">
-                3
-              </TableCell>
-              <TableCell align="right">
-                <Button
-                  variant="contained"
-                  color="secondary"
-                >
-                  Remove
-              </Button>
-              </TableCell>
-            </TableRow>
+            {this.state.listSkills.map(this.renderItemTable)}
           </TableBody>
         </Table>
       </Grid>
     )
   }
 
+  redirectToProjectPage(): JSX.Element {
+    if (this.state.shouldRedirect) {
+      return <Redirect to={ScreensConstants.COMPANYPROJECTS} />
+    }
+
+    return <div />
+  }
+
   render(): JSX.Element {
     return (
       <ContentWrapper>
+        {this.redirectToProjectPage()}
         <div className="create-project-body">
           <Typography component="h1" variant="h5" >
             New project
@@ -107,11 +265,12 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
             margin="normal"
             required
             fullWidth
-            id="project-name"
+            id="name"
             label="Project name"
-            name="project-name"
+            name="name"
             autoComplete="name"
             autoFocus
+            onChange={this.handleChange}
           />
 
           <TextField
@@ -119,11 +278,12 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
             margin="normal"
             required
             fullWidth
-            id="project-description"
+            id="description"
             label="Description"
-            name="project-description"
-            autoComplete="email"
+            name="description"
+            autoComplete="description"
             autoFocus
+            onChange={this.handleChange}
             rows={3}
             rowsMax={5}
             multiline={true}
@@ -143,6 +303,7 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
                 type="submit"
                 fullWidth
                 variant="contained"
+                onClick={this.onSubmit}
               >
                 Create project
             </Button>

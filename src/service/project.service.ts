@@ -1,7 +1,13 @@
 import CONFIG from 'config/enviroments.config'
 import axios from 'axios'
 
+export interface ISkillTableItem {
+  "skillId": number,
+  "level": number
+}
+
 export default class ProjectService {
+
   static getProjectsAndInterestedFreelancers(){
     return axios({
       method: 'POST',
@@ -77,13 +83,22 @@ export default class ProjectService {
     })
   }
 
-  static addProject(){
+  static addProject(
+    name: string,
+    description: string,
+    listSkills: ISkillTableItem[]
+    ){
     return axios({
       method: 'POST',
-      url: `${CONFIG.API_URL}/project/add`,
+      url: `${CONFIG.API_URL}/project/insert`,
       headers: {
         'Content-Type': 'application/json',
         'x-access-token': localStorage.token
+      },
+      data: {
+        name,
+        description,
+        listSkills,
       },
     })
   }
