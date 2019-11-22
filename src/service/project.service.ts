@@ -55,6 +55,23 @@ export default class ProjectService {
     })
   }
 
+
+  static addInterestOnFreelancer(projectId: number, userId: number, hasCompanyInterest: boolean) {
+    return axios({
+      method: 'POST',
+      url: `${CONFIG.API_URL}/project/interests/update`,
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': localStorage.token
+      },
+      data: {
+        projectId,
+        userId,
+        hasCompanyInterest
+      },
+    })
+  }
+
   static editProject(projectId: number){
     return axios({
       method: 'POST',

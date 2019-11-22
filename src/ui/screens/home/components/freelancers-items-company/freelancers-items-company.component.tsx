@@ -27,6 +27,7 @@ export class FreelancersItemsCompany extends PureComponent<IFreelancersItemsComp
     this.renderSkill = this.renderSkill.bind(this)
     this.renderItemProject = this.renderItemProject.bind(this)
     this.renderItemFreelancer = this.renderItemFreelancer.bind(this)
+    this.addInterestOnFreelancer = this.addInterestOnFreelancer.bind(this)
   }
 
   refreshContent() {
@@ -48,6 +49,22 @@ export class FreelancersItemsCompany extends PureComponent<IFreelancersItemsComp
 
   componentDidMount() {
     this.refreshContent()
+  }
+
+  addInterestOnFreelancer(projectId: string, userId: string, hasCompanyInterest: boolean): void {
+    ProjectService.addInterestOnFreelancer(
+      Number.parseInt(projectId),
+      Number.parseInt(userId),
+      hasCompanyInterest
+    )
+      .then((response: AxiosResponse) => {
+        //wait half-second
+        new Promise(resolve => setTimeout(resolve, 500))
+        this.refreshContent()
+      })
+      .catch((error: AxiosError) => {
+        console.log(error)
+      })
   }
 
   renderItemProject(projectItem: any): JSX.Element {
@@ -76,7 +93,7 @@ export class FreelancersItemsCompany extends PureComponent<IFreelancersItemsComp
     )
   }
 
-  renderItemFreelancer(freelancerItem: any): JSX.Element {
+  renderItemFreelancer(freelancerItem: any, index: number): JSX.Element {
     return (
       <Grid
         className="freelancers-items-company-container"
@@ -130,11 +147,17 @@ export class FreelancersItemsCompany extends PureComponent<IFreelancersItemsComp
               <IconButton
                 color="primary"
                 className="far fa-heart project-items-freelancer-like-icon"
+                onClick={() => {
+                  this.addInterestOnFreelancer(this.state.data[index].id, freelancerItem.user.id, true);
+                }}
               ></IconButton>
 
               <IconButton
                 color="secondary"
                 className="far fa-times-circle project-items-freelancer-dislike-icon"
+                onClick={() => {
+                  this.addInterestOnFreelancer(this.state.data[index].id, freelancerItem.user.id, false);
+                }}
               ></IconButton>
             </Grid>
           </div>
