@@ -55,7 +55,6 @@ export default class ProjectService {
     })
   }
 
-
   static addInterestOnFreelancer(projectId: number, userId: number, hasCompanyInterest: boolean) {
     return axios({
       method: 'POST',
