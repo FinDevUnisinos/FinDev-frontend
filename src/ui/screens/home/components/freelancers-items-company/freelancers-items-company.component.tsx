@@ -1,14 +1,12 @@
 import React, { PureComponent } from 'react'
-import { Grid } from '@material-ui/core'
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import "./freelancers-items-company.css"
 import ProjectService from '../../../../../service/project.service'
 import { AxiosError, AxiosResponse } from 'axios'
-import IconButton from '@material-ui/core/IconButton';
 import { ContentWrapper } from 'components/index';
-import { FreelancerItem } from './frelancer-item.component';
+import { FreelancerItem } from './freelancer-item.component';
 
 interface IFreelancersItemsCompanyPropType { }
 
