@@ -70,6 +70,12 @@ export class FreelancerItem extends PureComponent<IFreelancerItemPropType, IFree
             >
               {this.props.freelancerItem.user.name}
             </Grid>
+            <Grid
+              item
+              className="freelancer-item-email"
+            >
+              {this.props.freelancerItem.hasCompanyInterest == true ? this.props.freelancerItem.user.email : ""}
+            </Grid>
 
 
             <Grid
@@ -103,7 +109,11 @@ export class FreelancerItem extends PureComponent<IFreelancerItemPropType, IFree
             >
               <IconButton
                 color="primary"
-                className="far fa-heart project-items-freelancer-like-icon"
+                className={
+                  this.props.freelancerItem.hasCompanyInterest == true ?
+                    "fas fa-heart project-items-freelancer-like-icon" :
+                    "far fa-heart project-items-freelancer-like-icon"
+                }
                 onClick={() => {
                   this.addInterestOnFreelancer(
                     this.props.projectId,

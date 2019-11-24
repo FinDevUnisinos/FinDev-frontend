@@ -56,6 +56,14 @@
   text-align: center;
 }
 
+.freelancer-item-email {
+  margin: 10px;
+  font-size: 10px;
+  min-height: 0px;
+  font-weight: bold;
+  text-align: center;
+}
+
 .project-item-skills-title {
   margin: 10px;
   font-size: 20px;
