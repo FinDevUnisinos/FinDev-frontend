@@ -96,25 +96,24 @@ export class EditUserSkillsScreen extends PureComponent<EditUserSkillsProps, Edi
     }
 
     includeSkill(): void {
-
-        UserService.addUserSkill(this.state.skillId,this.state.level)
-        .then((response: AxiosResponse) => {
-            this.refreshUserSkills()
-        })
-        .catch((error: AxiosError) => {
-            console.log(error)
-        })        
+        UserService.addUserSkill(this.state.skillId, this.state.level)
+            .then((response: AxiosResponse) => {
+                this.refreshUserSkills()
+            })
+            .catch((error: AxiosError) => {
+                console.log(error)
+            })
     }
 
     deleteSkill(value: number): void {
 
         UserService.removeUserSkill(value)
-        .then((response: AxiosResponse) => {
-            this.refreshUserSkills()
-        })
-        .catch((error: AxiosError) => {
-            console.log(error)
-        })
+            .then((response: AxiosResponse) => {
+                this.refreshUserSkills()
+            })
+            .catch((error: AxiosError) => {
+                console.log(error)
+            })
     }
 
     loadEachSkill(skill: any): any {
@@ -179,29 +178,36 @@ export class EditUserSkillsScreen extends PureComponent<EditUserSkillsProps, Edi
     }
 
     renderItemTable(skillItem: any, i: number): JSX.Element {
-        return (
-            <TableRow>
-                <TableCell component="th" scope="row">
-                    {skillItem.skill.description}
-                </TableCell>
-                <TableCell align="right">
-                    {skillItem.level}
-                </TableCell>
-                <TableCell align="right">
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        onClick={
-                            () => {
-                                this.deleteSkill(skillItem.skill.id)
+        if (skillItem.skill == undefined) {
+
+            return (<div />)
+
+        } else {
+
+            return (
+                <TableRow>
+                    <TableCell component="th" scope="row">
+                        {skillItem.skill.description}
+                    </TableCell>
+                    <TableCell align="right">
+                        {skillItem.level}
+                    </TableCell>
+                    <TableCell align="right">
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            onClick={
+                                () => {
+                                    this.deleteSkill(skillItem.skill.id)
+                                }
                             }
-                        }
-                    >
-                        Remove
+                        >
+                            Remove
         </Button>
-                </TableCell>
-            </TableRow>
-        )
+                    </TableCell>
+                </TableRow>
+            )
+        }
     }
 
     renderTable(): JSX.Element {
