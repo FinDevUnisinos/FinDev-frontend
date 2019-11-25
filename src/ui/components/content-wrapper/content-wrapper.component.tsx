@@ -55,8 +55,8 @@ export class ContentWrapperComponent extends PureComponent<IContentWrapperPropTy
           isMain: false,
         },
         {
-          text: 'Messages',
-          path: '/',
+          text: 'My Skills',
+          path: '/mySkills',
           isMain: false,
         },
         {

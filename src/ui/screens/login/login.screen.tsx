@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import LoginService from 'service/user.service'
+import UserService from 'service/user.service'
 import { AxiosError, AxiosResponse } from 'axios'
 import { Link, Redirect } from 'react-router-dom'
 import { ScreensConstants } from 'constants/index'
@@ -60,11 +60,11 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
       error: false,
     })
 
-    LoginService.login(this.state.email, this.state.password)
+    UserService.login(this.state.email, this.state.password)
       .then((response: AxiosResponse) => {
         localStorage.token = response.data
 
-        LoginService.getUser()
+        UserService.getUser()
           .then((response: AxiosResponse) => {
 
             const localUserData = response.data

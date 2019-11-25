@@ -1,46 +1,45 @@
 import React, { PureComponent } from 'react'
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { ScreensConstants } from 'constants/index'
-import { Redirect } from 'react-router-dom'
 import { ContentWrapper } from 'components/index'
 import {
     InputLabel, Table, TableHead,
     TableBody, TableCell, TableRow, NativeSelect
 } from '@material-ui/core'
-import "./edit-profile.css"
+import "./edit-user-skills.css"
 import { AxiosResponse, AxiosError } from 'axios'
-import LoginService, { ISkillTableItem } from 'service/user.service'
+import UserService, { ISkillTableItem } from 'service/user.service'
 import SkillService from 'service/skill.service'
 
-interface EditProfileProps { }
+interface EditUserSkillsProps { }
 
-interface EditProfileState {
-    name: string,
+interface EditUserSkillsState {
     skillId: number,
+    skillName: string,
     level: number,
     listSkills: ISkillTableItem[],
     error: boolean,
     shouldRedirect: boolean,
     refresh: boolean,
-    skillsData: any
+    skillsData: any,
+    userSkillsData: any
 }
 
-export class EditProfileScreen extends PureComponent<EditProfileProps, EditProfileState>{
-    constructor(props: EditProfileProps) {
+export class EditUserSkillsScreen extends PureComponent<EditUserSkillsProps, EditUserSkillsState>{
+    constructor(props: EditUserSkillsProps) {
         super(props)
 
         this.state = {
-            name: ' ',
             skillId: 1,
+            skillName: '',
             level: 1,
             listSkills: [],
             error: false,
             shouldRedirect: false,
             refresh: false,
-            skillsData: []
+            skillsData: [],
+            userSkillsData: []
         }
 
         this.renderAddSkill = this.renderAddSkill.bind(this)
@@ -51,25 +50,7 @@ export class EditProfileScreen extends PureComponent<EditProfileProps, EditProfi
         this.handleChange = this.handleChange.bind(this)
         this.render = this.render.bind(this)
         this.refreshSkillsContent = this.refreshSkillsContent.bind(this)
-        this.onSubmit = this.onSubmit.bind(this)
-        this.redirectToProjectPage = this.redirectToProjectPage.bind(this)
-    }
-
-    onSubmit() {
-        LoginService.editPofile(
-            this.state.listSkills
-        )
-            .then((response: AxiosResponse) => {
-                this.setState({
-                    shouldRedirect: true,
-                })
-
-            })
-            .catch((error: AxiosError) => {
-                this.setState({
-                    error: true,
-                })
-            })
+        this.refreshUserSkills = this.refreshUserSkills.bind(this)
     }
 
     handleChange(event: React.ChangeEvent<{
@@ -82,7 +63,7 @@ export class EditProfileScreen extends PureComponent<EditProfileProps, EditProfi
         nameloc = nameloc == undefined ? "" : nameloc
         this.setState({
             [nameloc]: value
-        } as Pick<EditProfileState, any>)
+        } as Pick<EditUserSkillsState, any>)
     }
 
     refreshSkillsContent() {
@@ -100,38 +81,46 @@ export class EditProfileScreen extends PureComponent<EditProfileProps, EditProfi
             })
     }
 
+    refreshUserSkills() {
+        UserService.getUserSkills()
+            .then((response: AxiosResponse) => {
+                this.setState(
+                    {
+                        ...this.state,
+                        userSkillsData: response.data,
+                    }
+                )
+            })
+            .catch((error: AxiosError) => {
+                console.log(error)
+            })
+    }
+
     componentDidMount() {
         this.refreshSkillsContent()
+        this.refreshUserSkills()
     }
 
     includeSkill(): void {
 
-        let hasItemYet = false
-        this.state.listSkills.forEach(element => {
-            hasItemYet = hasItemYet || element.skillId == this.state.skillId
-        });
-
-        if (!hasItemYet) {
-            this.state.listSkills.push(
-                {
-                    "skillId": this.state.skillId,
-                    "level": this.state.level
-                }
-            )
-
-            this.setState({
-                refresh: !this.state.refresh
-            } as Pick<EditProfileState, any>)
-        }
+        UserService.addUserSkill(this.state.skillId,this.state.level)
+        .then((response: AxiosResponse) => {
+            this.refreshUserSkills()
+        })
+        .catch((error: AxiosError) => {
+            console.log(error)
+        })        
     }
 
     deleteSkill(value: number): void {
 
-        delete this.state.listSkills[value]
-
-        this.setState({
-            refresh: !this.state.refresh
-        } as Pick<EditProfileState, any>)
+        UserService.removeUserSkill(value)
+        .then((response: AxiosResponse) => {
+            this.refreshUserSkills()
+        })
+        .catch((error: AxiosError) => {
+            console.log(error)
+        })
     }
 
     loadEachSkill(skill: any): any {
@@ -151,7 +140,7 @@ export class EditProfileScreen extends PureComponent<EditProfileProps, EditProfi
                 >
                     <InputLabel>Skill</InputLabel>
                     <NativeSelect
-                        className="create-project-select"
+                        className="edit-user-skills-select"
                         value={this.state.skillId}
                         onChange={this.handleChange}
                         inputProps={{
@@ -167,7 +156,7 @@ export class EditProfileScreen extends PureComponent<EditProfileProps, EditProfi
                 >
                     <InputLabel>Level</InputLabel>
                     <NativeSelect
-                        className="edit-profile-select"
+                        className="edit-user-skills-select"
                         value={this.state.level}
                         onChange={this.handleChange}
                         inputProps={{
@@ -199,7 +188,7 @@ export class EditProfileScreen extends PureComponent<EditProfileProps, EditProfi
         return (
             <TableRow>
                 <TableCell component="th" scope="row">
-                    {skillItem.skillId}
+                    {skillItem.skill.description}
                 </TableCell>
                 <TableCell align="right">
                     {skillItem.level}
@@ -210,7 +199,7 @@ export class EditProfileScreen extends PureComponent<EditProfileProps, EditProfi
                         color="secondary"
                         onClick={
                             () => {
-                                this.deleteSkill(i)
+                                this.deleteSkill(skillItem.skill.id)
                             }
                         }
                     >
@@ -233,51 +222,26 @@ export class EditProfileScreen extends PureComponent<EditProfileProps, EditProfi
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {this.state.listSkills.map(this.renderItemTable)}
+                        {this.state.userSkillsData[0] == undefined ?
+                            "" :
+                            this.state.userSkillsData[0].skillsUser.map(this.renderItemTable)}
                     </TableBody>
                 </Table>
             </Grid>
         )
     }
 
-    redirectToProjectPage(): JSX.Element {
-        if (this.state.shouldRedirect) {
-            return <Redirect to={ScreensConstants.COMPANYPROJECTS} />
-        }
-
-        return <div />
-    }
 
     render(): JSX.Element {
         return (
             <ContentWrapper>
-                {this.redirectToProjectPage()}
-                <div className="edit-profile-body">
+                <div className="edit-user-skills-body">
                     <Typography component="h1" variant="h5" >
-                        New project
+                        Manage Skills
           </Typography>
 
                     {this.renderAddSkill()}
                     {this.renderTable()}
-                    <Grid container
-                        direction="row"
-                        justify="center"
-                        alignItems="center"
-                        className="create-project-submit-button"
-                    >
-                        <Grid item
-                            xs={6}
-                        >
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                onClick={this.onSubmit}
-                            >
-                                Edit Profile
-                            </Button>
-                        </Grid>
-                    </Grid>
                 </div>
             </ContentWrapper>
         )

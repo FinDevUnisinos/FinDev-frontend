@@ -1,14 +1,19 @@
 import React from 'react'
 import './App.css'
-import { Home, LoginScreen } from 'screens/index'
 import { ScreensConstants } from 'constants/index'
 import { Provider } from 'react-redux'
 import { store } from 'app_redux/index'
-
 import { BrowserRouter, Route, Redirect } from 'react-router-dom'
-import { SignUpScreen, CreateProjectScreen} from 'screens/index'
-
+import { } from 'screens/index'
+import { 
+  Home,
+  LoginScreen,
+  SignUpScreen, 
+  CreateProjectScreen, 
+  EditUserSkillsScreen 
+} from 'screens/index'
 import { ProjectItemsFreelancer, ProjectItemsCompany } from 'screens/home/components/index'
+
 interface AppProps { }
 
 export class App extends React.Component<AppProps, {}> {
@@ -23,6 +28,7 @@ export class App extends React.Component<AppProps, {}> {
             <Route exact path={ScreensConstants.COMPANYPROJECTS} component={ProjectItemsCompany} />
             <Route exact path={ScreensConstants.FREELANCERPROJECTS} component={ProjectItemsFreelancer} />
             <Route exact path={ScreensConstants.NEW_PROJECT} component={CreateProjectScreen} />
+            <Route exact path={ScreensConstants.MANAGE_SKILLS} component={EditUserSkillsScreen} />
             <Redirect to={ScreensConstants.LOGIN} />
           </BrowserRouter>
         </Provider>
