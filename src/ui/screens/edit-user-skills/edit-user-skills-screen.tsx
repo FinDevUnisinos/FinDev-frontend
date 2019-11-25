@@ -16,12 +16,9 @@ interface EditUserSkillsProps { }
 
 interface EditUserSkillsState {
     skillId: number,
-    skillName: string,
     level: number,
     listSkills: ISkillTableItem[],
     error: boolean,
-    shouldRedirect: boolean,
-    refresh: boolean,
     skillsData: any,
     userSkillsData: any
 }
@@ -32,12 +29,9 @@ export class EditUserSkillsScreen extends PureComponent<EditUserSkillsProps, Edi
 
         this.state = {
             skillId: 1,
-            skillName: '',
             level: 1,
             listSkills: [],
             error: false,
-            shouldRedirect: false,
-            refresh: false,
             skillsData: [],
             userSkillsData: []
         }
