@@ -18,6 +18,7 @@ interface EditUserSkillsState {
     skillId: number,
     level: number,
     listSkills: ISkillTableItem[],
+    refresh: boolean,
     error: boolean,
     skillsData: any,
     userSkillsData: any
@@ -31,6 +32,7 @@ export class EditUserSkillsScreen extends PureComponent<EditUserSkillsProps, Edi
             skillId: 1,
             level: 1,
             listSkills: [],
+            refresh: false,
             error: false,
             skillsData: [],
             userSkillsData: []
@@ -62,7 +64,7 @@ export class EditUserSkillsScreen extends PureComponent<EditUserSkillsProps, Edi
 
     refreshSkillsContent() {
         SkillService.getAllSkills()
-            .then((response: AxiosResponse) => {
+            .then(async (response: AxiosResponse) => {
                 this.setState(
                     {
                         ...this.state,
@@ -75,13 +77,15 @@ export class EditUserSkillsScreen extends PureComponent<EditUserSkillsProps, Edi
             })
     }
 
-    refreshUserSkills() {
-        UserService.getUserSkills()
-            .then((response: AxiosResponse) => {
+    async refreshUserSkills() {
+        await UserService.getUserSkills()
+            .then(async (response: AxiosResponse) => {
                 this.setState(
                     {
                         ...this.state,
                         userSkillsData: response.data,
+                        refresh: !this.state.refresh
+
                     }
                 )
             })
@@ -95,11 +99,14 @@ export class EditUserSkillsScreen extends PureComponent<EditUserSkillsProps, Edi
         this.refreshUserSkills()
     }
 
-    includeSkill(): void {
-        UserService.addUserSkill(this.state.skillId, this.state.level)
-            .then((response: AxiosResponse) => {
-                this.refreshUserSkills()
+    async includeSkill(): Promise<void> {
+        await UserService.addUserSkill(this.state.skillId, this.state.level)
+            .then(async (response: AxiosResponse) => {
+                await new Promise(resolve => setTimeout(resolve, 500));
             })
+            .finally(
+                () => this.refreshUserSkills()
+            )
             .catch((error: AxiosError) => {
                 console.log(error)
             })
@@ -108,9 +115,11 @@ export class EditUserSkillsScreen extends PureComponent<EditUserSkillsProps, Edi
     deleteSkill(value: number): void {
 
         UserService.removeUserSkill(value)
-            .then((response: AxiosResponse) => {
-                this.refreshUserSkills()
-            })
+            .then(async (response: AxiosResponse) => {
+                await new Promise(resolve => setTimeout(resolve, 500));
+            }).finally(
+                () => this.refreshUserSkills()
+            )
             .catch((error: AxiosError) => {
                 console.log(error)
             })
@@ -203,7 +212,7 @@ export class EditUserSkillsScreen extends PureComponent<EditUserSkillsProps, Edi
                             }
                         >
                             Remove
-        </Button>
+                        </Button>
                     </TableCell>
                 </TableRow>
             )
