@@ -1,6 +1,11 @@
 import CONFIG from 'config/enviroments.config'
 import axios from 'axios'
 
+export interface ISkillTableItem {
+  "skillId": number,
+  "level": number
+}
+
 export default class LoginService {
 
   static login(email: string, password: string) {
@@ -40,6 +45,23 @@ export default class LoginService {
         email,
         password,
         userType
+      },
+    })
+  }
+
+
+  static editPofile(
+    listSkills: ISkillTableItem[]
+    ){
+    return axios({
+      method: 'POST',
+      url: `${CONFIG.API_URL}/user/edit`,
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': localStorage.token
+      },
+      data: {
+        listSkills,
       },
     })
   }
