@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import { ContentWrapper } from 'components/index'
 import {
     InputLabel, Table, TableHead,
-    TableBody, TableCell, TableRow, NativeSelect
+    TableBody, TableCell, TableRow, NativeSelect, TextField
 } from '@material-ui/core'
 import "./edit-user-skills.css"
 import { AxiosResponse, AxiosError } from 'axios'
@@ -15,6 +15,7 @@ import SkillService from 'service/skill.service'
 interface EditUserSkillsProps { }
 
 interface EditUserSkillsState {
+    skill: string,
     skillId: number,
     level: number,
     listSkills: ISkillTableItem[],
@@ -29,6 +30,7 @@ export class EditUserSkillsScreen extends PureComponent<EditUserSkillsProps, Edi
         super(props)
 
         this.state = {
+            skill: '',
             skillId: 1,
             level: 1,
             listSkills: [],
@@ -47,6 +49,8 @@ export class EditUserSkillsScreen extends PureComponent<EditUserSkillsProps, Edi
         this.render = this.render.bind(this)
         this.refreshSkillsContent = this.refreshSkillsContent.bind(this)
         this.refreshUserSkills = this.refreshUserSkills.bind(this)
+        this.renderCreateSkill = this.renderCreateSkill.bind(this)
+        this.onCreateSkill = this.onCreateSkill.bind(this)
     }
 
     handleChange(event: React.ChangeEvent<{
@@ -123,9 +127,59 @@ export class EditUserSkillsScreen extends PureComponent<EditUserSkillsProps, Edi
             })
     }
 
+    onCreateSkill(): void {
+        SkillService.addSkill(this.state.skill)
+            .then(async (response: AxiosResponse) => {
+                this.refreshSkillsContent()
+                this.setState(
+                    {
+                        ...this.state,
+                        skill: '',
+                        skillId: Number.parseInt(response.data.id.id)
+                    }
+                )
+            })
+            .catch((error: AxiosError) => {
+                console.log(error)
+            })
+    }
+
     loadEachSkill(skill: any): any {
         return (
             <option value={skill.id}>{skill.description}</option>
+        )
+    }
+
+    renderCreateSkill(): JSX.Element {
+        return (
+            <div className="new-skill-body">
+                <Typography component="h1" variant="h5" >
+                    Create a new Skill
+                </Typography>
+
+                <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="skill"
+                    label="Skill"
+                    name="skill"
+                    value={this.state.skill}
+                    autoComplete="skill"
+                    autoFocus
+                    onChange={this.handleChange}
+                />
+
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    onClick={this.onCreateSkill}
+                >
+                    Create Skill
+                </Button>
+            </div>
         )
     }
 
@@ -238,14 +292,16 @@ export class EditUserSkillsScreen extends PureComponent<EditUserSkillsProps, Edi
         )
     }
 
-
     render(): JSX.Element {
         return (
             <ContentWrapper>
+
+                {this.renderCreateSkill()}
+
                 <div className="edit-user-skills-body">
                     <Typography component="h1" variant="h5" >
                         Manage Skills
-          </Typography>
+                    </Typography>
 
                     {this.renderAddSkill()}
                     {this.renderTable()}

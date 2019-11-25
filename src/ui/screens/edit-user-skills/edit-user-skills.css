@@ -1,13 +1,17 @@
-.edit-user-skills-body{
+.edit-user-skills-body {
     padding-left: 10px;
     padding-top: 10px;
-  }
-  
-  .edit-user-skills-select{
+}
+
+.new-skill-body {
+    width: 50%;
+    align-items: left;
+}
+
+.edit-user-skills-select {
     width: 100%;
-  }
-  
-  .edit-user-skills-submit-button{
+}
+
+.edit-user-skills-submit-button {
     margin-top: 10px;
-  }
-  
+}

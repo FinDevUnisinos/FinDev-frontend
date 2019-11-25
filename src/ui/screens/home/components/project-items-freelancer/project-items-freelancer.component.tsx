@@ -54,8 +54,8 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
     ProjectService.addInterestOnProject(Number.parseInt(projectId), positive)
       .then((response: AxiosResponse) => {
         console.log(response.data)
-        //wait half-second
-        new Promise( resolve => setTimeout(resolve, 500) )
+        //wait a second
+        new Promise( resolve => setTimeout(resolve, 1000) )
         this.refreshContent()
       })
       .catch((error: AxiosError) => {
