@@ -102,7 +102,6 @@ export class EditUserSkillsScreen extends PureComponent<EditUserSkillsProps, Edi
     async includeSkill(): Promise<void> {
         await UserService.addUserSkill(this.state.skillId, this.state.level)
             .then(async (response: AxiosResponse) => {
-                await new Promise(resolve => setTimeout(resolve, 500));
             })
             .finally(
                 () => this.refreshUserSkills()
@@ -116,7 +115,6 @@ export class EditUserSkillsScreen extends PureComponent<EditUserSkillsProps, Edi
 
         UserService.removeUserSkill(value)
             .then(async (response: AxiosResponse) => {
-                await new Promise(resolve => setTimeout(resolve, 500));
             }).finally(
                 () => this.refreshUserSkills()
             )
