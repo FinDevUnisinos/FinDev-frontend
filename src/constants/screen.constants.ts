@@ -5,4 +5,5 @@ export class ScreensConstants {
   static COMPANYPROJECTS: string = '/company-projects'
   static FREELANCERPROJECTS: string = '/freelancer-projects'
   static NEW_PROJECT: string = '/new-project'
+  static MANAGE_SKILLS: string = '/mySkills'
 }

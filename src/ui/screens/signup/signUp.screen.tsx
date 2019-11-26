@@ -9,7 +9,7 @@ import Container from '@material-ui/core/Container';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import LoginService from 'service/user.service'
+import UserService from 'service/user.service'
 import { AxiosError, AxiosResponse } from 'axios'
 import { Redirect } from 'react-router-dom'
 import { ScreensConstants } from 'constants/index'
@@ -57,11 +57,11 @@ export class SignUpScreen extends PureComponent<SignUpProps, SignUpState>{
       error: false,
     })
 
-    LoginService.signUp(this.state.name, this.state.email, this.state.password, this.state.userType)
+    UserService.signUp(this.state.name, this.state.email, this.state.password, this.state.userType)
       .then((response: AxiosResponse) => {
         localStorage.token = response.data
 
-        LoginService.getUser()
+        UserService.getUser()
           .then((response: AxiosResponse) => {
 
             const localUserData = response.data

@@ -14,4 +14,18 @@ export default class SkillService {
     })
   }
 
+  static addSkill(description: string) {
+    return axios({
+      method: 'POST',
+      url: `${CONFIG.API_URL}/skill/insert`,
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': localStorage.token,
+      },
+      data:{
+        description
+      }
+    })
+  }
+
 }

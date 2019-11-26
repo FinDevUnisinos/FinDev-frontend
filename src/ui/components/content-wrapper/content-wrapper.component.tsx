@@ -56,9 +56,9 @@ export class ContentWrapperComponent extends PureComponent<IContentWrapperPropTy
           isMain: false,
         },
         {
-          text: 'Messages',
-          path: '/',
-          isMain: false,
+          text: 'My Skills',
+          path:  ScreensConstants.MANAGE_SKILLS,
+          isMain: localStorage.currentPath == ScreensConstants.MANAGE_SKILLS ? true : false,
         },
         {
           text: 'Accepted',
