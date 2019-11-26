@@ -11,6 +11,7 @@ import "./edit-user-skills.css"
 import { AxiosResponse, AxiosError } from 'axios'
 import UserService, { ISkillTableItem } from 'service/user.service'
 import SkillService from 'service/skill.service'
+import { ScreensConstants } from 'constants/index'
 
 interface EditUserSkillsProps { }
 
@@ -39,6 +40,8 @@ export class EditUserSkillsScreen extends PureComponent<EditUserSkillsProps, Edi
             skillsData: [],
             userSkillsData: []
         }
+
+        localStorage.currentPath = ScreensConstants.MANAGE_SKILLS
 
         this.renderAddSkill = this.renderAddSkill.bind(this)
         this.deleteSkill = this.deleteSkill.bind(this)

@@ -4,6 +4,7 @@ import maps from './content-wrapper.map'
 import './content-wrapper.css'
 import { LateralAccessMenu, IMenuItemType, TopMenu } from 'components/index'
 import { UserTypes } from 'constants/userType.constants'
+import { ScreensConstants } from 'constants/index'
 
 interface IContentWrapperPropType {
   isRetracted?: boolean
@@ -56,8 +57,8 @@ export class ContentWrapperComponent extends PureComponent<IContentWrapperPropTy
         },
         {
           text: 'My Skills',
-          path: '/mySkills',
-          isMain: false,
+          path:  ScreensConstants.MANAGE_SKILLS,
+          isMain: localStorage.currentPath == ScreensConstants.MANAGE_SKILLS ? true : false,
         },
         {
           text: 'Accepted',
