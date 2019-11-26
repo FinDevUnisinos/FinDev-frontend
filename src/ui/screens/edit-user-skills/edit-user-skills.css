@@ -1,17 +1,25 @@
 .edit-user-skills-body {
-    padding-left: 10px;
-    padding-top: 10px;
+    padding-left: 2%;
+    padding-top: 2%;
+    padding-bottom: 2%;
 }
 
 .new-skill-body {
+    padding-left: 2%;
+    padding-top: 2%;
+    padding-bottom: 2%;
     width: 50%;
     align-items: left;
 }
 
 .edit-user-skills-select {
+    padding-right: 2%;
+    padding-left: 2%;
     width: 100%;
+    min-height: 25px;
 }
 
 .edit-user-skills-submit-button {
+    padding-left: 2%;
     margin-top: 10px;
 }
