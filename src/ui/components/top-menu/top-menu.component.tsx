@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid, IconButton } from '@material-ui/core'
 import "./top-menu.css"
+import { Link, Redirect } from 'react-router-dom'
+import { ScreensConstants } from 'constants/index'
 
 interface ITopMenuPropType { }
 
@@ -8,6 +10,9 @@ interface ITopMenuStateType { }
 
 export class TopMenu extends PureComponent<ITopMenuPropType, ITopMenuStateType>{
 
+  logout(): void{
+    localStorage.clear()
+  }
   renderUserData(): JSX.Element {
     return (
       <Grid
@@ -41,9 +46,10 @@ export class TopMenu extends PureComponent<ITopMenuPropType, ITopMenuStateType>{
           spacing={2}
           justify="flex-end"
         >
-          <Grid item>
-            <i className="fas fa-bell top-menu-icon" />
-          </Grid>
+          <Link to={ScreensConstants.LOGIN}
+            className="fa fa-sign-out top-menu-logout"
+            onClick={this.logout}>
+          </Link>
           {this.renderUserData()}
         </Grid>
       </div>
