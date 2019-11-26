@@ -33,6 +33,7 @@ export class ProjectItemsCompany extends PureComponent<IProjectItemsCompanyPropT
     this.editProject = this.editProject.bind(this)
     this.closeProject = this.closeProject.bind(this)
     this.addProject = this.addProject.bind(this)
+    localStorage.currentPath = ScreensConstants.COMPANYPROJECTS
   }
 
   refreshContent() {

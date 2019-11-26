@@ -23,23 +23,23 @@ export class ContentWrapperComponent extends PureComponent<IContentWrapperPropTy
       return [
         {
           text: 'FreeLancers',
-          path: '/home',
-          isMain: true,
+          path: ScreensConstants.HOME,
+          isMain: localStorage.currentPath == ScreensConstants.HOME ? true : false,
         },
         {
           text: 'Projects',
-          path: '/company-projects',
-          isMain: false,
+          path: ScreensConstants.COMPANYPROJECTS,
+          isMain: localStorage.currentPath == ScreensConstants.COMPANYPROJECTS ? true : false,
         },
         {
           text: 'Messages',
           path: '/',
-          isMain: false,
+          isMain: localStorage.currentPath == "/messages" ? true : false,
         },
         {
           text: 'Accepted',
           path: '/',
-          isMain: false,
+          isMain: localStorage.currentPath == "/accepted" ? true : false,
         }
       ]
     }
@@ -47,8 +47,8 @@ export class ContentWrapperComponent extends PureComponent<IContentWrapperPropTy
       return [
         {
           text: 'Projects',
-          path: '/freelancer-projects',
-          isMain: true,
+          path: ScreensConstants.HOME,
+          isMain: localStorage.currentPath == ScreensConstants.HOME ? true : false,
         },
         {
           text: 'Liked',
