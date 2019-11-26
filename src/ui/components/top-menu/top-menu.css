@@ -10,6 +10,13 @@
   color: #2C73CA;
 }
 
+.top-menu-logout {
+  font-size: 30px;
+  color: #2C73CA;
+  text-decoration: none;
+  align-self: center;
+}
+
 .top-menu-user-name{
   font-size: 14px;
   font-weight: bold;
