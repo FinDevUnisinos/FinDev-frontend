@@ -30,16 +30,6 @@ export class ContentWrapperComponent extends PureComponent<IContentWrapperPropTy
           text: 'Projects',
           path: ScreensConstants.COMPANYPROJECTS,
           isMain: localStorage.currentPath == ScreensConstants.COMPANYPROJECTS ? true : false,
-        },
-        {
-          text: 'Messages',
-          path: '/',
-          isMain: localStorage.currentPath == "/messages" ? true : false,
-        },
-        {
-          text: 'Accepted',
-          path: '/',
-          isMain: localStorage.currentPath == "/accepted" ? true : false,
         }
       ]
     }
@@ -51,20 +41,11 @@ export class ContentWrapperComponent extends PureComponent<IContentWrapperPropTy
           isMain: localStorage.currentPath == ScreensConstants.HOME ? true : false,
         },
         {
-          text: 'Liked',
-          path: '/',
-          isMain: false,
-        },
-        {
           text: 'My Skills',
           path:  ScreensConstants.MANAGE_SKILLS,
           isMain: localStorage.currentPath == ScreensConstants.MANAGE_SKILLS ? true : false,
-        },
-        {
-          text: 'Accepted',
-          path: '/',
-          isMain: false,
         }
+
       ]
     }
     else{
