@@ -9,7 +9,7 @@ import UserService from 'service/user.service'
 import { AxiosError, AxiosResponse } from 'axios'
 import { Link, Redirect } from 'react-router-dom'
 import { ScreensConstants } from 'constants/index'
-
+import { LogoImage } from 'assets/index'
 
 import './login.css'
 
@@ -110,6 +110,7 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
   render(): JSX.Element {
     return (
       <Container component="main" maxWidth="xs">
+        <img src={LogoImage} className="logo" />
         {this.redirectToHome()}
         <CssBaseline />
         <Typography component="h1" variant="h5" >
@@ -151,11 +152,6 @@ export class LoginScreen extends PureComponent<LoginProps, LoginState> {
           Sign In
         </Button>
         <Grid container>
-          <Grid item xs>
-            <Link to="/home">
-              Forgot password?
-            </Link>
-          </Grid>
           <Grid item>
             <Link to={ScreensConstants.SIGNUP}>
               {"Don't have an account? Sign Up"}
