@@ -154,7 +154,17 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
       <ContentWrapper>
         <GridList className="project-items-freelancer-grid-list">
           <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-            <ListSubheader component="div">Projects</ListSubheader>
+            <ListSubheader component="div">Available Projects</ListSubheader>
+          </GridListTile>
+          {
+            this.state.data.map(
+              this.renderItemProject
+            )
+          }
+        </GridList>
+        <GridList className="project-items-freelancer-grid-list">
+          <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
+            <ListSubheader component="div">My Projects</ListSubheader>
           </GridListTile>
           {
             this.state.data.map(
