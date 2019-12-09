@@ -28,7 +28,7 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
     this.renderItemProject = this.renderItemProject.bind(this)
     this.renderMyItemProject = this.renderMyItemProject.bind(this)
     this.addInterestOnProject = this.addInterestOnProject.bind(this)
-    this.renderUserProjects = this.renderUserProjects.bind(this)
+    this.getProjectsAndInterestedFreelancers = this.getProjectsAndInterestedFreelancers.bind(this)
   }
 
   refreshContent() {
@@ -76,8 +76,8 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
     )
   }
 
-  renderUserProjects(userId: number): void {
-    ProjectService.getProjectsByOwner(userId)
+  getProjectsAndInterestedFreelancers(): void {
+    ProjectService.getProjectsAndInterestedFreelancers()
       .then((response: AxiosResponse) => {
         console.log(response.data)
         //wait a second
