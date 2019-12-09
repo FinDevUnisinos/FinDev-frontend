@@ -119,18 +119,4 @@ export default class ProjectService {
     })
   }
 
-  static getProjectsByOwner(userId: number){
-    return axios({
-      method: 'POST',
-      url: `${CONFIG.API_URL}/project/all`,
-      headers: {
-        'Content-Type': 'application/json',
-        'x-access-token': localStorage.token
-      },
-      data: {
-        id: userId
-      },
-    })
-  }
-
   }
