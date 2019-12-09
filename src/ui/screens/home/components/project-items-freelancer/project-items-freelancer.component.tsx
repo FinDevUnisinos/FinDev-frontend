@@ -26,7 +26,9 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
     }
     this.renderSkill = this.renderSkill.bind(this)
     this.renderItemProject = this.renderItemProject.bind(this)
+    this.renderMyItemProject = this.renderMyItemProject.bind(this)
     this.addInterestOnProject = this.addInterestOnProject.bind(this)
+    this.renderUserProjects = this.renderUserProjects.bind(this)
   }
 
   refreshContent() {
@@ -74,7 +76,95 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
     )
   }
 
+  renderUserProjects(userId: number): void {
+    ProjectService.getProjectsByOwner(userId)
+      .then((response: AxiosResponse) => {
+        console.log(response.data)
+        //wait a second
+        new Promise( resolve => setTimeout(resolve, 1000) )
+        this.refreshContent()
+      })
+      .catch((error: AxiosError) => {
+        console.log(error)
+      })
+  }
+
   renderItemProject(projectItem: any): JSX.Element {
+    return (
+      <Grid
+        className="project-items-freelancer-container"
+        item
+        xs={6}
+        sm={6}
+        style={{ height: "auto" }}
+        spacing={0}
+        justify="flex-start"
+        direction="column"
+      >
+        <div className="project-items-freelancer-subcontainer">
+          <div className="project-items-freelancer-subsubcontainer">
+            <Grid
+              item
+              className="project-item-title"
+            >
+              {projectItem.name}
+            </Grid>
+
+
+            <Grid
+              item
+              className="project-items-freelancer-text"
+            >
+              {projectItem.description}
+            </Grid>
+
+
+            <Grid
+              item
+            >
+              <div className="project-item-skills-title">Skills</div>
+              <div className="project-skills">
+                {
+                  projectItem.skillsProject.map(
+                    this.renderSkill
+                  )
+                }
+              </div>
+            </Grid>
+
+
+            <Grid
+              container
+              spacing={2}
+              justify="center"
+              alignItems="center"
+              direction="row"
+            >
+              <IconButton
+                color="primary"
+                onClick={() => {
+                  this.addInterestOnProject(projectItem.id, true);
+                }}
+                className="far fa-heart project-items-freelancer-like-icon"
+              ></IconButton>
+
+              <IconButton
+                color="secondary"
+                onClick={() => {
+                  this.addInterestOnProject(projectItem.id, false);
+                }}
+                className="far fa-times-circle project-items-freelancer-dislike-icon"
+              ></IconButton>
+            </Grid>
+
+          </div>
+        </div>
+
+      </Grid>
+    )
+  }
+
+  renderMyItemProject(projectItem: any): JSX.Element {
     return (
       <Grid
         className="project-items-freelancer-container"
@@ -168,7 +258,7 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
           </GridListTile>
           {
             this.state.data.map(
-              this.renderItemProject
+              this.renderMyItemProject
             )
           }
         </GridList>
