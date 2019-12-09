@@ -9,29 +9,27 @@ import { AxiosError, AxiosResponse } from 'axios'
 import IconButton from '@material-ui/core/IconButton';
 import { ContentWrapper } from 'components/index';
 
-interface IProjectItemsFreelancerPropType { }
+interface IProjectLikedFreelancerPropType { }
 
-interface IProjectItemsFreelancerStateType {
+interface IProjectLikedFreelancerStateType {
   data: any,
   error: boolean,
 }
 
-export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelancerPropType, IProjectItemsFreelancerStateType>{
-  constructor(props: IProjectItemsFreelancerPropType) {
+export class ProjectLikedFreelancer extends PureComponent<IProjectLikedFreelancerPropType, IProjectLikedFreelancerStateType>{
+  constructor(props: IProjectLikedFreelancerPropType) {
     super(props)
 
     this.state = {
       data: [],
       error: false,
     }
-
     this.renderSkill = this.renderSkill.bind(this)
     this.renderItemProject = this.renderItemProject.bind(this)
     this.addInterestOnProject = this.addInterestOnProject.bind(this)
   }
-
   refreshContent() {
-    ProjectService.getProjectsAvailableForFreelancers()
+    ProjectService.getProjectsAvailableForFreelancers() // getProjectsAndInterestedFreelancers
       .then((response: AxiosResponse) => {
         this.setState(
           {
@@ -44,7 +42,7 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
       })
       .catch((error: AxiosError) => {
         console.log(error)
-      })      
+      })
   }
 
   componentDidMount() {
@@ -127,14 +125,6 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
               direction="row"
             >
               <IconButton
-                color="primary"
-                onClick={() => {
-                  this.addInterestOnProject(projectItem.id, true);
-                }}
-                className="far fa-heart project-items-freelancer-like-icon"
-              ></IconButton>
-
-              <IconButton
                 color="secondary"
                 onClick={() => {
                   this.addInterestOnProject(projectItem.id, false);
@@ -149,13 +139,12 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
       </Grid>
     )
   }
-
   render(): JSX.Element {
     return (
       <ContentWrapper>
         <GridList className="project-items-freelancer-grid-list">
           <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-            <ListSubheader component="div">Available Projects</ListSubheader>
+            <ListSubheader component="div">My Available Projects</ListSubheader>
           </GridListTile>
           {
             this.state.data.map(
@@ -168,5 +157,3 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
     )
   }
 }
-
-
