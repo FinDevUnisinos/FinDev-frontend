@@ -1,100 +1,111 @@
-import React, { PureComponent } from 'react'
-import { Grid, Button } from '@material-ui/core'
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import "./project-items-company.css"
-import ProjectService from '../../../../../service/project.service'
-import { AxiosError, AxiosResponse } from 'axios'
-import IconButton from '@material-ui/core/IconButton';
-import { ContentWrapper } from 'components/index'
-import { Redirect } from 'react-router-dom'
-import { ScreensConstants } from 'constants/index'
+import React, { PureComponent } from "react";
+import { Grid, Button } from "@material-ui/core";
+import GridList from "@material-ui/core/GridList";
+import GridListTile from "@material-ui/core/GridListTile";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import "./project-items-company.css";
+import ProjectService from "../../../../../service/project.service";
+import { AxiosError, AxiosResponse } from "axios";
+import IconButton from "@material-ui/core/IconButton";
+import { ContentWrapper } from "components/index";
+import { Redirect } from "react-router-dom";
+import { ScreensConstants } from "constants/index";
 
-interface IProjectItemsCompanyPropType { }
+interface IProjectItemsCompanyPropType {}
 
 interface IProjectItemsCompanyStateType {
-  data: any,
-  error: boolean,
-  shouldRedirectToNewProject: boolean,
+  data: any;
+  error: boolean;
+  shouldRedirectToNewProject: boolean;
+  shouldRedirectToUpdateProject: boolean;
 }
 
-export class ProjectItemsCompany extends PureComponent<IProjectItemsCompanyPropType, IProjectItemsCompanyStateType>{
+export class ProjectItemsCompany extends PureComponent<
+  IProjectItemsCompanyPropType,
+  IProjectItemsCompanyStateType
+> {
   constructor(props: IProjectItemsCompanyPropType) {
-    super(props)
+    super(props);
 
     this.state = {
       data: [],
       error: false,
       shouldRedirectToNewProject: false,
-    }
-    this.renderSkill = this.renderSkill.bind(this)
-    this.renderItemProject = this.renderItemProject.bind(this)
-    this.editProject = this.editProject.bind(this)
-    this.closeProject = this.closeProject.bind(this)
-    this.addProject = this.addProject.bind(this)
-    localStorage.currentPath = ScreensConstants.COMPANYPROJECTS
+      shouldRedirectToUpdateProject: false
+    };
+
+    this.renderSkill = this.renderSkill.bind(this);
+    this.renderItemProject = this.renderItemProject.bind(this);
+    this.editProject = this.editProject.bind(this);
+    this.closeProject = this.closeProject.bind(this);
+    this.addProject = this.addProject.bind(this);
+    this.getState = this.getState.bind(this);
+    localStorage.currentPath = ScreensConstants.COMPANYPROJECTS;
   }
 
   refreshContent() {
     ProjectService.getProjectsOfCompany()
       .then((response: AxiosResponse) => {
-        this.setState(
-          {
-            ...this.state,
-            data: response.data,
-          }
-        )
-        console.log(response.data)
+        this.setState({
+          ...this.state,
+          data: response.data
+        });
+        console.log(response.data);
       })
       .catch((error: AxiosError) => {
-        console.log(error)
-      })
+        console.log(error);
+      });
   }
 
   componentDidMount() {
-    this.refreshContent()
-  }
-
-  editProject(projectId: string): void {
-    ProjectService.editProject(Number.parseInt(projectId))
-      .then((response: AxiosResponse) => {
-        console.log(response.data)
-        new Promise(resolve => setTimeout(resolve, 500))
-        this.refreshContent()
-      })
-      .catch((error: AxiosError) => {
-        console.log(error)
-      })
-  }
-
-  closeProject(projectId: string): void {
-    ProjectService.closeProject(Number.parseInt(projectId))
-      .then((response: AxiosResponse) => {
-        console.log(response.data)
-        new Promise(resolve => setTimeout(resolve, 500))
-        this.refreshContent()
-      })
-      .catch((error: AxiosError) => {
-        console.log(error)
-      })
+    this.refreshContent();
   }
 
   addProject(): void {
     this.setState({
       shouldRedirectToNewProject: true
-    })
+    });
+  }
+
+  closeProject(projectId: string): void {
+    ProjectService.closeProject(Number.parseInt(projectId))
+      .then((response: AxiosResponse) => {
+        console.log(response.data);
+        new Promise(resolve => setTimeout(resolve, 500));
+        this.refreshContent();
+      })
+      .catch((error: AxiosError) => {
+        console.log(error);
+      });
+  }
+
+  editProject(): void {
+    this.setState({
+      shouldRedirectToUpdateProject: true
+    });
   }
 
   renderSkill(skillItem: any): JSX.Element {
     return (
-      <Grid
-        item
-        className="project-items-company-skill-text"
-      >
-        {skillItem.skill && skillItem.skill.description} ({skillItem.level == null ? "No skills!" : skillItem.level})
+      <Grid item className="project-items-company-skill-text">
+        {skillItem.skill && skillItem.skill.description} (
+        {skillItem.level == null ? "No skills!" : skillItem.level})
       </Grid>
-    )
+    );
+  }
+
+  getState(){
+    return {
+      name: 'aaa',
+      description: 'aaa',
+      skillId: 1,
+      level: 1,
+      listSkills: [],
+      error: false,
+      shouldRedirect: false,
+      refresh: false,
+      skillsData: []
+    }
   }
 
   renderItemProject(projectItem: any): JSX.Element {
@@ -111,32 +122,18 @@ export class ProjectItemsCompany extends PureComponent<IProjectItemsCompanyPropT
       >
         <div className="project-items-company-subcontainer">
           <div className="project-items-company-subsubcontainer">
-            <Grid
-              item
-              className="project-item-title"
-            >
+            <Grid item className="project-item-title">
               {projectItem.name}
             </Grid>
 
-
-            <Grid
-              item
-              className="project-items-company-text"
-            >
+            <Grid item className="project-items-company-text">
               {projectItem.description}
             </Grid>
 
-
-            <Grid
-              item
-            >
+            <Grid item>
               <div className="project-item-skills-title">Skills</div>
               <div className="project-skills">
-                {
-                  projectItem.skillsProject.map(
-                    this.renderSkill
-                  )
-                }
+                {projectItem.skillsProject.map(this.renderSkill)}
               </div>
             </Grid>
 
@@ -147,10 +144,17 @@ export class ProjectItemsCompany extends PureComponent<IProjectItemsCompanyPropT
               alignItems="center"
               direction="row"
             >
+
+              {this.state.shouldRedirectToUpdateProject && (
+                <Redirect to={{
+                  pathname: ScreensConstants.NEW_PROJECT,
+                  state: this.getState()
+                }} />
+              )}
               <IconButton
                 color="primary"
                 onClick={() => {
-                  this.editProject(projectItem.id);
+                  this.editProject();
                 }}
                 className="fas fa-pencil-alt project-items-company-edit-icon"
               ></IconButton>
@@ -163,22 +167,20 @@ export class ProjectItemsCompany extends PureComponent<IProjectItemsCompanyPropT
                 className="far fa-times-circle project-items-company-delete-icon"
               ></IconButton>
             </Grid>
-
           </div>
         </div>
-
       </Grid>
-    )
+    );
   }
 
   render(): JSX.Element {
     return (
       <ContentWrapper>
-        {this.state.shouldRedirectToNewProject &&
+        {this.state.shouldRedirectToNewProject && (
           <Redirect to={ScreensConstants.NEW_PROJECT} />
-        }
+        )}
         <GridList className="project-items-company-grid-list">
-          <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
+          <GridListTile key="Subheader" cols={2} style={{ height: "auto" }}>
             <ListSubheader component="div">
               <IconButton
                 color="primary"
@@ -190,13 +192,9 @@ export class ProjectItemsCompany extends PureComponent<IProjectItemsCompanyPropT
               Projects
             </ListSubheader>
           </GridListTile>
-          {
-            this.state.data.map(
-              this.renderItemProject
-            )
-          }
+          {this.state.data.map(this.renderItemProject)}
         </GridList>
       </ContentWrapper>
-    )
+    );
   }
 }

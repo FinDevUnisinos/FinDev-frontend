@@ -15,7 +15,9 @@ import { AxiosResponse, AxiosError } from 'axios'
 import ProjectService, { ISkillTableItem } from 'service/project.service'
 import SkillService from 'service/skill.service'
 
-interface CreateProjectProps { }
+interface CreateProjectProps { 
+  location: any
+}
 
 interface CreateProjectState {
   name: string,
@@ -29,21 +31,22 @@ interface CreateProjectState {
   skillsData: any
 }
 
-export class CreateProjectScreen extends PureComponent<CreateProjectProps, CreateProjectState>{
+export class CreateProjectScreen extends PureComponent<CreateProjectProps, CreateProjectState, React.Component >{
   constructor(props: CreateProjectProps) {
     super(props)
 
-    this.state = {
-      name: '',
-      description: '',
-      skillId: 1,
-      level: 1,
-      listSkills: [],
-      error: false,
-      shouldRedirect: false,
-      refresh: false,
-      skillsData: []
-    }
+      this.state = {
+        name: '',
+        description: '',
+        skillId: 1,
+        level: 1,
+        listSkills: [],
+        error: false,
+        shouldRedirect: false,
+        refresh: false,
+        skillsData: []
+      }
+    //}
 
     this.renderAddSkill = this.renderAddSkill.bind(this)
     this.deleteSkill = this.deleteSkill.bind(this)
@@ -252,13 +255,24 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
     return <div />
   }
 
-  render(): JSX.Element {
+  isUndefined(value: any): any{
+    if(value.state === undefined){
+      return true
+    }
+    else{
+      return false
+    }
+  }
+
+  render(): JSX.Element {    
     return (
       <ContentWrapper>
         {this.redirectToProjectPage()}
         <div className="create-project-body">
           <Typography component="h1" variant="h5" >
-            New project
+          
+          {this.isUndefined(this.props.location) ? "New Project" : "Edit Project"}
+          
           </Typography>
           <TextField
             variant="outlined"
@@ -271,6 +285,7 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
             autoComplete="name"
             autoFocus
             onChange={this.handleChange}
+            //value={this.isUndefined(this.props.location) ? "" : this.props.location.state.name}
           />
 
           <TextField
@@ -287,6 +302,8 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
             rows={3}
             rowsMax={5}
             multiline={true}
+            //value={this.isUndefined(this.props.location) ? "" : this.props.location.state.description}
+
           />
           {this.renderAddSkill()}
           {this.renderTable()}
@@ -305,7 +322,7 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
                 variant="contained"
                 onClick={this.onSubmit}
               >
-                Create project
+              {this.isUndefined(this.props.location) ? "Create Project" : "Update Project"}
             </Button>
             </Grid>
           </Grid>
@@ -314,3 +331,4 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
     )
   }
 }
+
