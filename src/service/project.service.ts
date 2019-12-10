@@ -56,6 +56,21 @@ export default class ProjectService {
     })
   }
 
+  static removeInterestOnProject(projectId: number, positive: boolean) {
+    return axios({
+      method: 'POST',
+      url: `${CONFIG.API_URL}/project/interests/remove`,
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': localStorage.token
+      },
+      data: {
+        projectId,
+        positive
+      },
+    })
+  }
+
   static addInterestOnFreelancer(projectId: number, userId: number, hasCompanyInterest: boolean) {
     return axios({
       method: 'POST',

@@ -29,7 +29,7 @@ export class ProjectLikedFreelancer extends PureComponent<
     };
 
     this.renderItemProject = this.renderItemProject.bind(this);
-    this.addInterestOnProject = this.addInterestOnProject.bind(this);
+    this.removeInterestOnProject = this.removeInterestOnProject.bind(this);
     this.renderInterestsProjectsData = this.renderInterestsProjectsData.bind(
       this
     );
@@ -52,8 +52,8 @@ export class ProjectLikedFreelancer extends PureComponent<
     this.refreshContent();
   }
 
-  addInterestOnProject(projectId: string): void {
-    ProjectService.addInterestOnProject(Number.parseInt(projectId), false)
+  removeInterestOnProject(projectId: string): void {
+    ProjectService.removeInterestOnProject(Number.parseInt(projectId), false)
       .then((response: AxiosResponse) => {
         console.log(response.data);
         //wait a second
@@ -85,7 +85,7 @@ export class ProjectLikedFreelancer extends PureComponent<
             <IconButton
               color="secondary"
               onClick={() => {
-                this.addInterestOnProject(interestsProjects.project.id);
+                this.removeInterestOnProject(interestsProjects.project.id);
               }}
               className="far fa-times-circle project-items-freelancer-dislike-icon"
             ></IconButton>
