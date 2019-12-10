@@ -50,7 +50,7 @@ export default class ProjectService {
         'x-access-token': localStorage.token
       },
       data: {
-        projectId,
+        projectId,    
         positive
       },
     })

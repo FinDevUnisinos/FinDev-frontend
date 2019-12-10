@@ -30,10 +30,9 @@ export class ProjectLikedFreelancer extends PureComponent<
 
     this.renderItemProject = this.renderItemProject.bind(this);
     this.removeInterestOnProject = this.removeInterestOnProject.bind(this);
-    this.renderInterestsProjectsData = this.renderInterestsProjectsData.bind(
-      this
-    );
+    this.renderInterestsProjectsData = this.renderInterestsProjectsData.bind(this);
   }
+
   refreshContent() {
     ProjectService.getProjectsLikedByUser()
       .then((response: AxiosResponse) => {
@@ -123,4 +122,5 @@ export class ProjectLikedFreelancer extends PureComponent<
       </ContentWrapper>
     );
   }
+  
 }
