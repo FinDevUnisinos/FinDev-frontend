@@ -285,7 +285,7 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
             autoComplete="name"
             autoFocus
             onChange={this.handleChange}
-            //value={this.isUndefined(this.props.location) ? "" : this.props.location.state.name}
+            defaultValue={this.isUndefined(this.props.location) ? "" : this.props.location.state.name}
           />
 
           <TextField
@@ -302,7 +302,7 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
             rows={3}
             rowsMax={5}
             multiline={true}
-            //value={this.isUndefined(this.props.location) ? "" : this.props.location.state.description}
+            defaultValue={this.isUndefined(this.props.location) ? "" : this.props.location.state.description}
 
           />
           {this.renderAddSkill()}
