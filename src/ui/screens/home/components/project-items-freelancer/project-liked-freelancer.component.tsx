@@ -52,8 +52,8 @@ export class ProjectLikedFreelancer extends PureComponent<
     this.refreshContent();
   }
 
-  addInterestOnProject(projectId: string, positive: boolean): void {
-    ProjectService.addInterestOnProject(Number.parseInt(projectId), positive)
+  addInterestOnProject(projectId: string): void {
+    ProjectService.addInterestOnProject(Number.parseInt(projectId), false)
       .then((response: AxiosResponse) => {
         console.log(response.data);
         //wait a second
@@ -85,7 +85,7 @@ export class ProjectLikedFreelancer extends PureComponent<
             <IconButton
               color="secondary"
               onClick={() => {
-                this.addInterestOnProject(interestsProjects.project.id, false);
+                this.addInterestOnProject(interestsProjects.project.id);
               }}
               className="far fa-times-circle project-items-freelancer-dislike-icon"
             ></IconButton>
@@ -116,7 +116,7 @@ export class ProjectLikedFreelancer extends PureComponent<
       <ContentWrapper>
         <GridList className="project-items-freelancer-grid-list">
           <GridListTile key="Subheader" cols={2} style={{ height: "auto" }}>
-            <ListSubheader component="div">My Available Projects</ListSubheader>
+            <ListSubheader component="div">My Liked Projects</ListSubheader>
           </GridListTile>
           {this.state.data.map(this.renderItemProject)}
         </GridList>
