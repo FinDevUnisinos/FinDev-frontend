@@ -12,7 +12,7 @@ import {
   CreateProjectScreen, 
   EditUserSkillsScreen 
 } from 'screens/index'
-import { ProjectItemsFreelancer, ProjectItemsCompany } from 'screens/home/components/index'
+import { ProjectItemsFreelancer, ProjectLikedFreelancer, ProjectItemsCompany } from 'screens/home/components/index'
 
 interface AppProps { }
 
@@ -29,6 +29,7 @@ export class App extends React.Component<AppProps, {}> {
             <Route exact path={ScreensConstants.FREELANCERPROJECTS} component={ProjectItemsFreelancer} />
             <Route exact path={ScreensConstants.NEW_PROJECT} component={CreateProjectScreen} />
             <Route exact path={ScreensConstants.MANAGE_SKILLS} component={EditUserSkillsScreen} />
+            <Route exact path={ScreensConstants.MANAGE_PROJECTS} component={ProjectLikedFreelancer} />
             <Redirect to={ScreensConstants.LOGIN} />
           </BrowserRouter>
         </Provider>

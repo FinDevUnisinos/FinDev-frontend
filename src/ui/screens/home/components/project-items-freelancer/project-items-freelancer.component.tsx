@@ -24,6 +24,7 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
       data: [],
       error: false,
     }
+
     this.renderSkill = this.renderSkill.bind(this)
     this.renderItemProject = this.renderItemProject.bind(this)
     this.addInterestOnProject = this.addInterestOnProject.bind(this)
@@ -43,7 +44,7 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
       })
       .catch((error: AxiosError) => {
         console.log(error)
-      })
+      })      
   }
 
   componentDidMount() {
@@ -154,7 +155,7 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
       <ContentWrapper>
         <GridList className="project-items-freelancer-grid-list">
           <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-            <ListSubheader component="div">Projects</ListSubheader>
+            <ListSubheader component="div">Available Projects</ListSubheader>
           </GridListTile>
           {
             this.state.data.map(
@@ -167,3 +168,5 @@ export class ProjectItemsFreelancer extends PureComponent<IProjectItemsFreelance
     )
   }
 }
+
+

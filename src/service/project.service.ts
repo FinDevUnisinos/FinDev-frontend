@@ -18,6 +18,7 @@ export default class ProjectService {
       },
     })
   }
+
   static getProjectsAvailableForFreelancers() {
     return axios({
       method: 'POST',
@@ -44,6 +45,21 @@ export default class ProjectService {
     return axios({
       method: 'POST',
       url: `${CONFIG.API_URL}/project/interests/insert`,
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': localStorage.token
+      },
+      data: {
+        projectId,    
+        positive
+      },
+    })
+  }
+
+  static removeInterestOnProject(projectId: number, positive: boolean) {
+    return axios({
+      method: 'POST',
+      url: `${CONFIG.API_URL}/project/interests/remove`,
       headers: {
         'Content-Type': 'application/json',
         'x-access-token': localStorage.token
@@ -118,4 +134,16 @@ export default class ProjectService {
       },
     })
   }
-}
+
+  static getProjectsLikedByUser() {
+    return axios({
+      method: 'POST',
+      url: `${CONFIG.API_URL}/user/projects/liked`,
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': localStorage.token
+      },
+    })
+  }
+
+  }
