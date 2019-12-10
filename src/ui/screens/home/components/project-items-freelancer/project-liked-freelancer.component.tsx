@@ -8,6 +8,7 @@ import ProjectService from "../../../../../service/project.service";
 import { AxiosError, AxiosResponse } from "axios";
 import IconButton from "@material-ui/core/IconButton";
 import { ContentWrapper } from "components/index";
+import { ScreensConstants } from 'constants/index'
 
 interface IProjectLikedFreelancerPropType {}
 
@@ -31,6 +32,9 @@ export class ProjectLikedFreelancer extends PureComponent<
     this.renderItemProject = this.renderItemProject.bind(this);
     this.removeInterestOnProject = this.removeInterestOnProject.bind(this);
     this.renderInterestsProjectsData = this.renderInterestsProjectsData.bind(this);
+    
+    localStorage.currentPath = ScreensConstants.MANAGE_PROJECTS
+    
   }
 
   refreshContent() {
