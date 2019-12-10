@@ -18,6 +18,7 @@ export default class ProjectService {
       },
     })
   }
+
   static getProjectsAvailableForFreelancers() {
     return axios({
       method: 'POST',
@@ -115,6 +116,17 @@ export default class ProjectService {
         name,
         description,
         listSkills,
+      },
+    })
+  }
+
+  static getProjectsLikedByUser() {
+    return axios({
+      method: 'POST',
+      url: `${CONFIG.API_URL}/user/projects/liked`,
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': localStorage.token
       },
     })
   }
