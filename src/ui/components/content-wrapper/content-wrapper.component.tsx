@@ -41,6 +41,11 @@ export class ContentWrapperComponent extends PureComponent<IContentWrapperPropTy
           isMain: localStorage.currentPath == ScreensConstants.HOME ? true : false,
         },
         {
+          text: 'Liked Projects',
+          path: ScreensConstants.MANAGE_PROJECTS,
+          isMain: localStorage.currentPath == ScreensConstants.MANAGE_PROJECTS ? true : false,
+        },
+        {
           text: 'My Skills',
           path:  ScreensConstants.MANAGE_SKILLS,
           isMain: localStorage.currentPath == ScreensConstants.MANAGE_SKILLS ? true : false,
