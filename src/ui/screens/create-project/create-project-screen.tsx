@@ -61,36 +61,52 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
     this.updateProject = this.updateProject.bind(this)
   }
 
-  onSubmit() {
-    ProjectService.addProject(
-      this.state.name,
-      this.state.description,
-      this.state.listSkills
-    )
+  isUndefined(value: any): any{
+    if(value.state === undefined){
+      return true
+    }
+    else{
+      return false
+    }
+  }
+
+  updateProject(projectId: string, name: string, description: string): any{
+    ProjectService.updateProject(Number.parseInt(projectId), name, description)
       .then((response: AxiosResponse) => {
+        console.log(response.data);
         this.setState({
           shouldRedirect: true,
         })
 
       })
       .catch((error: AxiosError) => {
-        this.setState({
-          error: true,
-        })
-      })
+        console.log(error);
+      });
   }
-  
-  updateProject(projectId: string, name: string, description: string): any{
-      ProjectService.updateProject(Number.parseInt(projectId), name, description)
-        .then((response: AxiosResponse) => {
-          console.log(response.data);
-          new Promise(resolve => setTimeout(resolve, 500));
-         // this.refreshContent();
-        })
-        .catch((error: AxiosError) => {
-          console.log(error);
-        });
-    }
+
+  onSubmit() {
+    if(this.isUndefined(this.props.location)){
+      ProjectService.addProject(
+          this.state.name,
+          this.state.description,
+          this.state.listSkills
+        )
+          .then((response: AxiosResponse) => {
+            this.setState({
+              shouldRedirect: true,
+            })
+
+          })
+          .catch((error: AxiosError) => {
+            this.setState({
+              error: true,
+            })
+          })
+      }
+      else{
+        this.updateProject(this.props.location.state.id, this.state.name, this.state.description)
+      }
+  }
   
   handleChange(event: React.ChangeEvent<{
     name?: string;
@@ -158,15 +174,6 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
     return (
       <option value={skill.id}>{skill.description}</option>
     )
-  }
-
-  isUndefined(value: any): any{
-    if(value.state === undefined){
-      return true
-    }
-    else{
-      return false
-    }
   }
 
   renderAddSkill(): JSX.Element {
@@ -333,7 +340,7 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
                 type="submit"
                 fullWidth
                 variant="contained"
-                onClick={this.isUndefined(this.props.location) ? this.onSubmit : this.updateProject(this.props.location.state.id, "foi", "fondo")}
+                onClick={this.onSubmit}
 
               >
               {this.isUndefined(this.props.location) ? "Create Project" : "Update Project"}
