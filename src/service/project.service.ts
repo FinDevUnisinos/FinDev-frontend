@@ -41,6 +41,17 @@ export default class ProjectService {
     })
   }
 
+  static getProjectById(projectId: number) {
+    return axios({
+      method: 'POST',
+      url: `${CONFIG.API_URL}/project/id`,
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': localStorage.token
+      },
+    })
+  }
+
   static addInterestOnProject(projectId: number, positive: boolean) {
     return axios({
       method: 'POST',

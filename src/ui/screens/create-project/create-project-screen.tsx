@@ -147,6 +147,9 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
     )
   }
 
+
+
+
   renderAddSkill(): JSX.Element {
     return (
       <Grid container
@@ -264,7 +267,7 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
     }
   }
 
-  render(): JSX.Element {    
+  render(): JSX.Element {  
     return (
       <ContentWrapper>
         {this.redirectToProjectPage()}

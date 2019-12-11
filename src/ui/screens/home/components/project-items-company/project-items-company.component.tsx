@@ -18,6 +18,10 @@ interface IProjectItemsCompanyStateType {
   error: boolean;
   shouldRedirectToNewProject: boolean;
   shouldRedirectToUpdateProject: boolean;
+  name: string;
+  description: string;
+  id: number;
+  skills: any;
 }
 
 export class ProjectItemsCompany extends PureComponent<
@@ -31,7 +35,11 @@ export class ProjectItemsCompany extends PureComponent<
       data: [],
       error: false,
       shouldRedirectToNewProject: false,
-      shouldRedirectToUpdateProject: false
+      shouldRedirectToUpdateProject: false,
+      name: "",
+      description: "",
+      id: 0,
+      skills: []
     };
 
     this.renderSkill = this.renderSkill.bind(this);
@@ -39,7 +47,6 @@ export class ProjectItemsCompany extends PureComponent<
     this.editProject = this.editProject.bind(this);
     this.closeProject = this.closeProject.bind(this);
     this.addProject = this.addProject.bind(this);
-    this.getState = this.getState.bind(this);
     localStorage.currentPath = ScreensConstants.COMPANYPROJECTS;
   }
 
@@ -79,9 +86,33 @@ export class ProjectItemsCompany extends PureComponent<
       });
   }
 
-  editProject(): void {
+  editProject(id: number): void {
     this.setState({
       shouldRedirectToUpdateProject: true
+    });
+  }
+
+  setName(name: string): void {
+    this.setState({
+      name: name
+    });
+  }
+
+  setDescription(description: string): void {
+    this.setState({
+      description: description
+    });
+  }
+
+  setId(id: string): void {
+    this.setState({
+      id: Number.parseInt(id)
+    });
+  }
+
+  setSkills(skills: any):void{
+    this.setState({
+      skills: skills
     });
   }
 
@@ -92,20 +123,6 @@ export class ProjectItemsCompany extends PureComponent<
         {skillItem.level == null ? "No skills!" : skillItem.level})
       </Grid>
     );
-  }
-
-  getState(){
-    return {
-      name: 'aaa',
-      description: 'aaa',
-      skillId: 1,
-      level: 1,
-      listSkills: [],
-      error: false,
-      shouldRedirect: false,
-      refresh: false,
-      skillsData: []
-    }
   }
 
   renderItemProject(projectItem: any): JSX.Element {
@@ -144,17 +161,23 @@ export class ProjectItemsCompany extends PureComponent<
               alignItems="center"
               direction="row"
             >
-
               {this.state.shouldRedirectToUpdateProject && (
-                <Redirect to={{
-                  pathname: ScreensConstants.NEW_PROJECT,
-                  state: this.getState()
-                }} />
+                <Redirect
+                  to={{
+                    pathname: ScreensConstants.NEW_PROJECT,
+                    state: this.state
+                  }}
+                />
               )}
               <IconButton
                 color="primary"
                 onClick={() => {
-                  this.editProject();
+                  this.setName(projectItem.name);
+                  this.setDescription(projectItem.description);
+                  this.setId(projectItem.id);
+                  this.setSkills(projectItem.skillsProject)
+                  this.setDescription(projectItem.description);
+                  this.editProject(projectItem.id);
                 }}
                 className="fas fa-pencil-alt project-items-company-edit-icon"
               ></IconButton>
