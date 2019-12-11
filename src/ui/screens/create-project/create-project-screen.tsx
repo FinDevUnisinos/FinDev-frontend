@@ -58,6 +58,7 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
     this.refreshSkillsContent = this.refreshSkillsContent.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
     this.redirectToProjectPage = this.redirectToProjectPage.bind(this)
+    this.updateProject = this.updateProject.bind(this)
   }
 
   onSubmit() {
@@ -78,7 +79,19 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
         })
       })
   }
-
+  
+  updateProject(projectId: string, name: string, description: string): any{
+      ProjectService.updateProject(Number.parseInt(projectId), name, description)
+        .then((response: AxiosResponse) => {
+          console.log(response.data);
+          new Promise(resolve => setTimeout(resolve, 500));
+         // this.refreshContent();
+        })
+        .catch((error: AxiosError) => {
+          console.log(error);
+        });
+    }
+  
   handleChange(event: React.ChangeEvent<{
     name?: string;
     value: unknown;
@@ -147,8 +160,14 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
     )
   }
 
-
-
+  isUndefined(value: any): any{
+    if(value.state === undefined){
+      return true
+    }
+    else{
+      return false
+    }
+  }
 
   renderAddSkill(): JSX.Element {
     return (
@@ -258,15 +277,6 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
     return <div />
   }
 
-  isUndefined(value: any): any{
-    if(value.state === undefined){
-      return true
-    }
-    else{
-      return false
-    }
-  }
-
   render(): JSX.Element {  
     return (
       <ContentWrapper>
@@ -323,7 +333,8 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
                 type="submit"
                 fullWidth
                 variant="contained"
-                onClick={this.onSubmit}
+                onClick={this.isUndefined(this.props.location) ? this.onSubmit : this.updateProject(this.props.location.state.id, "foi", "fondo")}
+
               >
               {this.isUndefined(this.props.location) ? "Create Project" : "Update Project"}
             </Button>

@@ -112,6 +112,22 @@ export default class ProjectService {
     })
   }
 
+  static updateProject(id: number, name: string, description: string){
+    return axios({
+      method: 'POST',
+      url: `${CONFIG.API_URL}/project/update`,
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': localStorage.token
+      },
+      data: {
+        id,
+        name,
+        description
+      },
+    })
+  }
+
   static closeProject(projectId: number){
     return axios({
       method: 'POST',
