@@ -59,6 +59,7 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
     this.onSubmit = this.onSubmit.bind(this)
     this.redirectToProjectPage = this.redirectToProjectPage.bind(this)
     this.updateProject = this.updateProject.bind(this)
+    this.setPropState = this.setPropState.bind(this)
   }
 
   isUndefined(value: any): any{
@@ -66,12 +67,18 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
       return true
     }
     else{
+      if(this.state.name == "")
+          this.setState({name: this.props.location.name})
+      if(this.state.description == "")
+          this.setState({description: this.props.location.description})
+      if(this.state.listSkills == [])
+          this.setState({listSkills: this.props.location.state.skills})
       return false
     }
   }
 
-  updateProject(projectId: string, name: string, description: string): any{
-    ProjectService.updateProject(Number.parseInt(projectId), name, description)
+  updateProject(projectId: string, name: string, description: string, listSkills: any): any{
+    ProjectService.updateProject(Number.parseInt(projectId), name, description, listSkills)
       .then((response: AxiosResponse) => {
         console.log(response.data);
         this.setState({
@@ -104,7 +111,12 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
           })
       }
       else{
-        this.updateProject(this.props.location.state.id, this.state.name, this.state.description)
+        if(this.state.name == "")
+          this.setState({name: this.props.location.name})
+        if(this.state.description == "")
+          this.setState({description: this.props.location.description})
+
+        this.updateProject(this.props.location.state.id, this.state.name, this.state.description, this.state.listSkills)
       }
   }
   
@@ -256,7 +268,6 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
       </TableRow>
     )
   }
-
   
   setPropState(name: string, description: string, skills: any): void{
     this.setState(
@@ -264,7 +275,7 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
         name: name,
         description: description,
         skillsData: skills
-      }
+      })
   }
 
   renderTable(): JSX.Element {
@@ -295,9 +306,6 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
   }
 
   render(): JSX.Element {
-    if(!this.isUndefined(this.props.location)){
-      this.setPropState(this.props.location.state.name, this.props.location.state.descriptions, this.props.location.state.skills);
-  }
     return (
       <ContentWrapper>
         {this.redirectToProjectPage()}

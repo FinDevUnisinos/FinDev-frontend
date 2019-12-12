@@ -112,7 +112,7 @@ export default class ProjectService {
     })
   }
 
-  static updateProject(id: number, name: string, description: string){
+  static updateProject(id: number, name: string, description: string, listSkills: any){
     return axios({
       method: 'POST',
       url: `${CONFIG.API_URL}/project/update`,
@@ -123,7 +123,8 @@ export default class ProjectService {
       data: {
         id,
         name,
-        description
+        description,
+        listSkills
       },
     })
   }
@@ -172,5 +173,6 @@ export default class ProjectService {
       },
     })
   }
+  
 
   }
