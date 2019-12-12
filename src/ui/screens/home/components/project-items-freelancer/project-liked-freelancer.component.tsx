@@ -70,6 +70,16 @@ export class ProjectLikedFreelancer extends PureComponent<
 
   renderInterestsProjectsData(interestsProjects: any): JSX.Element {
     return (
+      <Grid
+      className="project-items-freelancer-container"
+      item
+      xs={6}
+      sm={6}
+      style={{ height: "auto" }}
+      spacing={0}
+      justify="flex-start"
+      direction="column"
+    >
       <div className="project-items-freelancer-subcontainer">
         <div className="project-items-freelancer-subsubcontainer">
           <Grid item className="project-item-title">
@@ -95,24 +105,12 @@ export class ProjectLikedFreelancer extends PureComponent<
           </Grid>
         </div>
       </div>
+      </Grid>
     );
   }
 
-  renderItemProject(projectItem: any): JSX.Element {
-    return (
-      <Grid
-        className="project-items-freelancer-container"
-        item
-        xs={6}
-        sm={6}
-        style={{ height: "auto" }}
-        spacing={0}
-        justify="flex-start"
-        direction="column"
-      >
-        {projectItem.interestsProjects.map(this.renderInterestsProjectsData)}
-      </Grid>
-    );
+  renderItemProject(projectItem: any): any {
+    return  projectItem.interestsProjects.map(this.renderInterestsProjectsData)
   }
   render(): JSX.Element {
     return (
