@@ -257,6 +257,16 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
     )
   }
 
+  
+  setPropState(name: string, description: string, skills: any): void{
+    this.setState(
+      {
+        name: name,
+        description: description,
+        skillsData: skills
+      }
+  }
+
   renderTable(): JSX.Element {
     return (
       <Grid container>
@@ -284,7 +294,10 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
     return <div />
   }
 
-  render(): JSX.Element {  
+  render(): JSX.Element {
+    if(!this.isUndefined(this.props.location)){
+      this.setPropState(this.props.location.state.name, this.props.location.state.descriptions, this.props.location.state.skills);
+  }
     return (
       <ContentWrapper>
         {this.redirectToProjectPage()}
