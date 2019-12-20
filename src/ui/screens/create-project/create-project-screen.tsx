@@ -15,7 +15,9 @@ import { AxiosResponse, AxiosError } from 'axios'
 import ProjectService, { ISkillTableItem } from 'service/project.service'
 import SkillService from 'service/skill.service'
 
-interface CreateProjectProps { }
+interface CreateProjectProps { 
+  location: any
+}
 
 interface CreateProjectState {
   name: string,
@@ -29,21 +31,22 @@ interface CreateProjectState {
   skillsData: any
 }
 
-export class CreateProjectScreen extends PureComponent<CreateProjectProps, CreateProjectState>{
+export class CreateProjectScreen extends PureComponent<CreateProjectProps, CreateProjectState, React.Component >{
   constructor(props: CreateProjectProps) {
     super(props)
 
-    this.state = {
-      name: '',
-      description: '',
-      skillId: 1,
-      level: 1,
-      listSkills: [],
-      error: false,
-      shouldRedirect: false,
-      refresh: false,
-      skillsData: []
-    }
+      this.state = {
+        name: '',
+        description: '',
+        skillId: 1,
+        level: 1,
+        listSkills: [],
+        error: false,
+        shouldRedirect: false,
+        refresh: false,
+        skillsData: []
+      }
+    //}
 
     this.renderAddSkill = this.renderAddSkill.bind(this)
     this.deleteSkill = this.deleteSkill.bind(this)
@@ -55,27 +58,68 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
     this.refreshSkillsContent = this.refreshSkillsContent.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
     this.redirectToProjectPage = this.redirectToProjectPage.bind(this)
+    this.updateProject = this.updateProject.bind(this)
+    this.setPropState = this.setPropState.bind(this)
   }
 
-  onSubmit() {
-    ProjectService.addProject(
-      this.state.name,
-      this.state.description,
-      this.state.listSkills
-    )
+  isUndefined(value: any): any{
+    if(value.state === undefined){
+      return true
+    }
+    else{
+      if(this.state.name == "")
+          this.setState({name: this.props.location.name})
+      if(this.state.description == "")
+          this.setState({description: this.props.location.description})
+      if(this.state.listSkills == [])
+          this.setState({listSkills: this.props.location.state.skills})
+      return false
+    }
+  }
+
+  updateProject(projectId: string, name: string, description: string, listSkills: any): any{
+    ProjectService.updateProject(Number.parseInt(projectId), name, description, listSkills)
       .then((response: AxiosResponse) => {
+        console.log(response.data);
         this.setState({
           shouldRedirect: true,
         })
 
       })
       .catch((error: AxiosError) => {
-        this.setState({
-          error: true,
-        })
-      })
+        console.log(error);
+      });
   }
 
+  onSubmit() {
+    if(this.isUndefined(this.props.location)){
+      ProjectService.addProject(
+          this.state.name,
+          this.state.description,
+          this.state.listSkills
+        )
+          .then((response: AxiosResponse) => {
+            this.setState({
+              shouldRedirect: true,
+            })
+
+          })
+          .catch((error: AxiosError) => {
+            this.setState({
+              error: true,
+            })
+          })
+      }
+      else{
+        if(this.state.name == "")
+          this.setState({name: this.props.location.name})
+        if(this.state.description == "")
+          this.setState({description: this.props.location.description})
+
+        this.updateProject(this.props.location.state.id, this.state.name, this.state.description, this.state.listSkills)
+      }
+  }
+  
   handleChange(event: React.ChangeEvent<{
     name?: string;
     value: unknown;
@@ -224,6 +268,15 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
       </TableRow>
     )
   }
+  
+  setPropState(name: string, description: string, skills: any): void{
+    this.setState(
+      {
+        name: name,
+        description: description,
+        skillsData: skills
+      })
+  }
 
   renderTable(): JSX.Element {
     return (
@@ -258,7 +311,9 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
         {this.redirectToProjectPage()}
         <div className="create-project-body">
           <Typography component="h1" variant="h5" >
-            New project
+          
+          {this.isUndefined(this.props.location) ? "New Project" : "Edit Project"}
+          
           </Typography>
           <TextField
             variant="outlined"
@@ -271,6 +326,7 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
             autoComplete="name"
             autoFocus
             onChange={this.handleChange}
+            defaultValue={this.isUndefined(this.props.location) ? "" : this.props.location.state.name}
           />
 
           <TextField
@@ -287,6 +343,8 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
             rows={3}
             rowsMax={5}
             multiline={true}
+            defaultValue={this.isUndefined(this.props.location) ? "" : this.props.location.state.description}
+
           />
           {this.renderAddSkill()}
           {this.renderTable()}
@@ -304,8 +362,9 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
                 fullWidth
                 variant="contained"
                 onClick={this.onSubmit}
+
               >
-                Create project
+              {this.isUndefined(this.props.location) ? "Create Project" : "Update Project"}
             </Button>
             </Grid>
           </Grid>
@@ -314,3 +373,4 @@ export class CreateProjectScreen extends PureComponent<CreateProjectProps, Creat
     )
   }
 }
+

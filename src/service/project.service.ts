@@ -41,6 +41,17 @@ export default class ProjectService {
     })
   }
 
+  static getProjectById(projectId: number) {
+    return axios({
+      method: 'POST',
+      url: `${CONFIG.API_URL}/project/id`,
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': localStorage.token
+      },
+    })
+  }
+
   static addInterestOnProject(projectId: number, positive: boolean) {
     return axios({
       method: 'POST',
@@ -101,6 +112,23 @@ export default class ProjectService {
     })
   }
 
+  static updateProject(id: number, name: string, description: string, listSkills: any){
+    return axios({
+      method: 'POST',
+      url: `${CONFIG.API_URL}/project/update`,
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': localStorage.token
+      },
+      data: {
+        id,
+        name,
+        description,
+        listSkills
+      },
+    })
+  }
+
   static closeProject(projectId: number){
     return axios({
       method: 'POST',
@@ -145,5 +173,6 @@ export default class ProjectService {
       },
     })
   }
+  
 
   }
